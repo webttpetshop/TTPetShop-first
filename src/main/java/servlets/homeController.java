@@ -12,22 +12,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.SinhVien;
+import beans.Users;
 import conn.DBConnection;
 import utils.DBUtils;
 
 /**
- * Servlet implementation class SinhVienListServlet
+ * Servlet implementation class homeController
  */
-@WebServlet(name="sinhvienList", urlPatterns =  { "/sinhvienList" }) 
-
-public class SinhVienListServlet extends HttpServlet {
+@WebServlet("/home")
+public class homeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SinhVienListServlet() {
+    public homeController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,26 +35,8 @@ public class SinhVienListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection conn = null;
-		try {
-		    conn = DBConnection.getConnection();
-		 } catch (ClassNotFoundException | SQLException el) {
-		   // TODO Auto-generated catch block
-		    el.printStackTrace();
-		 }
-
-		List<SinhVien> list = null;
-		try {
-		   list = DBUtils.listSinhvien(conn);
-		   System.out.println("connect listSV successfully!");
-		 } catch (SQLException e) {
-		    e.printStackTrace();
-		 }
-		request.setAttribute("sinhvienList", list);
-		// Forward sang /WEB-INF/views/productListView.jsp
-		response.setContentType("text/html;charset-UTF-8");
 		RequestDispatcher dispatcher = request.getServletContext()
-				.getRequestDispatcher("/WEB-INF/views/sinhvienListView.jsp");
+				.getRequestDispatcher("/WEB-INF/views/web/home.jsp");
 		dispatcher.forward(request, response);
 	}
 
