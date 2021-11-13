@@ -3,11 +3,14 @@ package conn;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class SQLServerConnection {
 	public static Connection initializeDatabase()
 	        throws SQLException, ClassNotFoundException {
-			String dbDriver ="com.microsoft.sqlserver.jdbc.SQLServerDriver";
+
+			ResourceBundle tst = ResourceBundle.getBundle("messages");
+			String dbDriver =tst.getString("dbDriver") ;
 	        String dbURL = "jdbc:sqlserver://localhost:1433";
 	        //Database name to access
 	        String dbName = "TTPetShop";
