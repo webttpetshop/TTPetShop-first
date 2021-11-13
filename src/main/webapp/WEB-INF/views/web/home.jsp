@@ -36,7 +36,7 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="#"><img src="assetsWEB/img/logoshop1.png" alt=""></a>
+            <a href="#"><img src="assetsWEB/img/TTPETSHOP.png" alt=""></a>
         </div>
         <div class="humberger__menu__cart">
             <ul>
@@ -133,7 +133,7 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="assetsWEB/img/logoshop1.png" alt=""></a>
+                        <a href="./index.html"><img src="assetsWEB/img/TTPETSHOP.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6">

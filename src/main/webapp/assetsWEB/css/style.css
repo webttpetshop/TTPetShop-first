@@ -423,6 +423,10 @@ ol {
     display: inline-block;
 }
 
+.header__logo img {
+	border-radius: 82px;
+}
+
 .header__menu {
     padding: 24px 0;
 }
