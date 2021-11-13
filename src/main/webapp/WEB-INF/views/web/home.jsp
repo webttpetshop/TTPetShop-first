@@ -33,12 +33,6 @@
 </head>
 
 <body>
-	<div class="about_backtop">
-        <div class="backtop">
-            <i class="fa fa-angle-double-up"></i>
-        </div>
-        <p class="backtop_text">Về đầu trang</p>
-    </div>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -811,23 +805,7 @@
     <script src="assetsWEB/slider/js/bootstrap.min.js"></script>
     <script src="assetsWEB/slider/js/owl.carousel.min.js"></script>
     <script src="assetsWEB/slider/js/main.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $(window).scroll(function() {
-                if ($(this).scrollTop()) {
-                    $('.backtop, .backtop_text').fadeIn();
-                } else {
-                    $('.backtop, .backtop_text').fadeOut();
-                }
-            });
-            $('.backtop').click(function() {
-                $('html, body').animate({
-                    scrollTop: 0
-                }, 1000);
-            });
-        });
-    </script>
+
 
 
 </body>
