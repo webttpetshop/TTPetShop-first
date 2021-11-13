@@ -1,1 +1,163 @@
-test cho coi nè
+CREATE DATABASE TTPetShop
+go
+USE TTPetShop
+go
+
+CREATE TABLE Products (
+	productID INT PRIMARY KEY NOT NULL,
+	name nvarchar NOT NULL,
+	price float NOT NULL DEFAULT '0',
+	categoryID integer,
+	description text,
+	pic VARCHAR,
+	quantity integer NOT NULL DEFAULT '1',
+	status integer NOT NULL DEFAULT '1',
+	liked integer,
+	viewed integer,
+
+)
+GO
+
+
+
+CREATE TABLE Users(
+	userID varchar(20) PRIMARY KEY NOT NULL,
+	password varchar(20) NOT NULL,
+	fullname NVARCHAR(255) NOT NULL,
+	pic VARCHAR,
+	address VARCHAR(255),
+	phone varchar(50),
+	coins integer NOT NULL DEFAULT 0,
+	role integer NOT NULL DEFAULT 0
+)
+GO
+
+SELECT * from (SELECT ROW_NUMBER() OVER (ORDER BY coins) AS r, *FROM dbo.Users) AS sub  WHERE sub.r between 1*3+1 AND 2*3
+
+INSERT INTO dbo.Users
+(
+    userID,
+    password,
+    fullname,
+    address,
+    phone,
+    role
+)
+VALUES
+(   'thanh1411',   -- userID - varchar(20)
+    '141121',   -- password - varchar(20)
+    N'Thanh Trung Trần',  -- fullname - nvarchar(255)
+    'dong nai',   -- address - varchar
+    '0338989824',   -- phone - varchar
+    0  -- role - integer
+    );
+
+INSERT INTO dbo.Users
+(
+    userID,
+    password,
+    fullname,
+    address,
+    phone,
+    role
+)
+VALUES
+(   'tam1111',   -- userID - varchar(20)
+    '141121',   -- password - varchar(20)
+    N'Pham Qui Tâm',  -- fullname - nvarchar(255)
+    'dong nai',   -- address - varchar
+    '0338989824',   -- phone - varchar
+    0  -- role - integer
+    );
+
+INSERT INTO dbo.Users
+(
+    userID,
+    password,
+    fullname,
+    address,
+    phone,
+    role
+)
+VALUES
+(   'thanhtam',   -- userID - varchar(20)
+    '141121',   -- password - varchar(20)
+    N'Phạm Thành tâm',  -- fullname - nvarchar(255)
+    'dong nai',   -- address - varchar
+    '0338989824',   -- phone - varchar
+    0  -- role - integer
+    );
+
+INSERT INTO dbo.Users
+(
+    userID,
+    password,
+    fullname,
+    address,
+    phone,
+    role
+)
+VALUES
+(   'tamthanh',   -- userID - varchar(20)
+    '141121',   -- password - varchar(20)
+    N'Trần Qui Thành',  -- fullname - nvarchar(255)
+    'dong nai',   -- address - varchar
+    '0338989824',   -- phone - varchar
+    0  -- role - integer
+    );
+
+	SELECT * FROM Users limit 2, 3
+	SELECT * FROM dbo.Users
+	go
+CREATE TABLE Cart (
+	cartID INT PRIMARY KEY IDENTITY,
+	userID VARCHAR(20) NOT NULL REFERENCES Users(userID),
+	total FLOAT DEFAULT 0
+)
+GO
+CREATE TABLE DetailCart (
+	cartID integer PRIMARY KEY,
+	productID integer NOT NULL,
+	quantity integer NOT NULL DEFAULT 1,
+	FOREIGN KEY(cartID) REFERENCES Cart(cartID)
+)
+GO
+CREATE TABLE Discount (
+	discountID varchar PRIMARY KEY,
+	quantity integer NOT NULL DEFAULT '1',
+	desDiscount varchar NOT NULL,
+
+)
+GO
+CREATE TABLE Bill (
+	billID integer PRIMARY KEY IDENTITY,
+	userID VARCHAR(20) NOT NULL REFERENCES Users(userID),
+	total float NOT NULL DEFAULT 0,
+	discountID VARCHAR REFERENCES Discount(discountID),
+	date datetime DEFAULT getdate(),
+	status integer NOT NULL DEFAULT '0'
+)
+GO
+CREATE TABLE DetailBill (
+	billID integer NOT NULL REFERENCES Bill(billID),
+	productID integer NOT NULL REFERENCES Products(productID) ,
+	quantity integer NOT NULL DEFAULT 1
+)
+GO
+CREATE TABLE Category (
+	categoryID integer PRIMARY KEY ,
+	nameCat VARCHAR(255),
+
+)
+GO
+ALTER TABLE Products WITH CHECK ADD CONSTRAINT Products_fk0 FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
+
+
+
+ALTER TABLE DetailCart WITH CHECK ADD CONSTRAINT DetailCart_fk1 FOREIGN KEY (productID) REFERENCES Products(productID)
+
+
+SELECT * FROM dbo.Bill
+
+
+
