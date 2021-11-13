@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="assetsWEB/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="assetsWEB/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="assetsWEB/css/style.css" type="text/css">
+
+
+
+    <link rel="stylesheet" href="assetsWEB/slider/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="assetsWEB/slider/css/style.css">
+    <link rel="stylesheet" href="assetsWEB/slider/css/owl.carousel.min.css">
 </head>
 
 <body>
@@ -225,7 +231,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hero__item set-bg" data-setbg="assetsWEB/img/hero/pet.jpg">
+                    <div class="hero__item set-bg">
+                          <div class="owl-carousel owl-1">
+					        <div><img src="assetsWEB/slider/images/hero_1.jpg" alt="Image" class="img-fluid"></div>
+					        <div><img src="assetsWEB/slider/images/hero_2.jpg" alt="Image" class="img-fluid"></div>
+					        <div><img src="assetsWEB/slider/images/hero_3.jpg" alt="Image" class="img-fluid"></div>
+					      </div>
                         <!--<div class="hero__text">
                             <span>FRUIT FRESH</span>
                             <h2>Vegetable <br />100% Organic</h2>
@@ -788,6 +799,12 @@
     <script src="assetsWEB/js/mixitup.min.js"></script>
     <script src="assetsWEB/js/owl.carousel.min.js"></script>
     <script src="assetsWEB/js/main.js"></script>
+
+    <!-- <script src="js/jquery-3.3.1.min.js"></script> -->
+    <script src="assetsWEB/slider/js/popper.min.js"></script>
+    <script src="assetsWEB/slider/js/bootstrap.min.js"></script>
+    <script src="assetsWEB/slider/js/owl.carousel.min.js"></script>
+    <script src="assetsWEB/slider/js/main.js"></script>
 
 
 
