@@ -35,6 +35,7 @@ public class DBUtils {
 		       us.setAddress(address);
 		       us.setPhone(phone);
 		       us.setCoins(coins);
+		       us.setRole(role);
 		      list.add(us);
 		   }
 		   System.out.println("connect student!");
@@ -73,10 +74,46 @@ public class DBUtils {
 		       us.setAddress(address);
 		       us.setPhone(phone);
 		       us.setCoins(coins);
+		       us.setRole(role);
 		      list.add(us);
 		   }
 		   System.out.println("connect student!");
 		   return list;
+	}
+	public static Users findUserByID(Connection conn, String username, String password) throws SQLException {
+		   String sql = "SELECT  distinct * FROM Users where userID= ? and password = ?";
+		   
+		   System.out.println("find user!");
+		   PreparedStatement pstm = conn.prepareStatement(sql);
+		   pstm.setString(1, username);
+		   pstm.setString(2, password);
+		   ResultSet rs = pstm.executeQuery();
+		   System.out.println("begin find!");
+		   //List<Users> list = new ArrayList<Users>();
+		   if (rs.next()) {
+		       String userID = rs.getString("userID");
+		       String pass = rs.getString("password");
+		       String fullname = rs.getString("fullname");
+		       String pic = rs.getString("pic");
+		       String address = rs.getString("address");
+		       String phone = rs.getString("phone");
+		       int coins =rs.getInt("coins");
+		       int role =rs.getInt("role");
+		       
+		       Users us = new Users();
+		       us.setUserID(userID);
+		       us.setPassword(pass);;
+		       us.setFullname(fullname);
+		       us.setPic(pic);
+		       us.setAddress(address);
+		       us.setPhone(phone);
+		       us.setCoins(coins);
+		       us.setRole(role);
+			   System.out.println("end find user and success");
+		       return us;
+
+		   }
+		   return null;
 	}
 		   
 /*	public static SinhVien findSinhVien(Connection conn, int idIn) throws SQLException {

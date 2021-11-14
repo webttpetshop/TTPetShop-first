@@ -163,7 +163,7 @@
 
 			<ul class="nav nav-list">
 				<li class="">
-					<a href='<c:url value="/admin-list-user"/>'>
+					<a href='<c:url value="/adminListUserByPage"/>'>
 						<i class="menu-icon fa fa-list-alt"></i>
 						<span class="menu-text"> Danh Sách Users </span>
 					</a>
@@ -191,7 +191,7 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="#">Danh sách Users </a>
+							<a href="adminListUserByPage">Danh sách Users </a>
 						</li>
 					</ul>
 				</div>
@@ -234,7 +234,7 @@
 												  <li class="page-item"><a class="page-link" href="#">2</a></li>
 												  <li class="page-item"><a class="page-link" href="#">3</a></li> -->
 												  <c:forEach begin="1" end="${total}" var="i">
-														<li class="page-item"><a class="page-link" href="listUserByPage?page=${i}">${i}</a></li>													
+														<li class="page-item"><a class="page-link" href="adminListUserByPage?page=${i}">${i}</a></li>													
 												  </c:forEach>
 												  <li class="page-item"><a class="page-link" href="#">Next</a></li>
 												</ul>

@@ -52,5 +52,12 @@ public class Users {
 	private String address;
 	private String phone;
 	private int coins;
+	private int role;
+	public int getRole() {
+		return role;
+	}
+	public void setRole(int role) {
+		this.role = role;
+	}
 
 }

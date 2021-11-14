@@ -19,7 +19,7 @@ import utils.DBUtils;
 /**
  * Servlet implementation class listUserByPage
  */
-@WebServlet("/listUserByPage")
+@WebServlet("/adminListUserByPage")
 public class listUserByPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -48,6 +48,8 @@ public class listUserByPage extends HttpServlet {
 		int totalpage = 3;
 		try {
 			String spageid= request.getParameter ("page") ; //tìm ra id của phần tử đầu tiên của trang
+			if (spageid== null)
+					spageid="1";
 			int pageid= Integer.parseInt(spageid);
 			int totalitem = 3; // số item trên 1 trang
 			/*if (pageid==1){}

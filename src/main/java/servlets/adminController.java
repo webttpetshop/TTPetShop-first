@@ -18,6 +18,8 @@ import utils.DBUtils;
 
 /**
  * Servlet implementation class adminController
+ * 
+ * tam thời ko sử dụng cái này nha hihi
  */
 @WebServlet("/admin-list-user")
 public class adminController extends HttpServlet {
@@ -59,9 +61,10 @@ public class adminController extends HttpServlet {
 		// Forward sang /WEB-INF/views/productListView.jsp
 		response.setContentType("text/html;charset-UTF-8");
 
-		RequestDispatcher dispatcher = request.getServletContext()
-				.getRequestDispatcher("/WEB-INF/views/admin/adminlistuser.jsp");
-		dispatcher.forward(request, response);
+		/*RequestDispatcher dispatcher = request.getServletContext()
+				.getRequestDispatcher("/WEB-INF/views/admin/adminListUserByPagejsp.jsp");
+		dispatcher.forward(request, response);*/
+		response.sendRedirect (request.getContextPath()+"/adminListUserByPage?page=1");
 	}
 
 	/**

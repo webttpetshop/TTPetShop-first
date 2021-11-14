@@ -212,6 +212,7 @@
 													<th>address</th>
 													<th>phone</th>
 													<th>coins</th>
+													<th>role</th>
 												  </tr>
 												</thead>
 												<tbody>
@@ -224,6 +225,7 @@
 												          <td>${us.address}</td>
 												          <td>${us.phone}</td>
 												          <td>${us.coins}</td>
+												          <td>${us.role}</td>
 												       </tr>
 												    </c:forEach>												
 												</tbody>

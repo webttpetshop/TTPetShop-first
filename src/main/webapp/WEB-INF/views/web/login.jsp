@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+            <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,11 +36,15 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('assetsWEB/Login_v3/images/TTPet SHop.png');">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<form action="" class="login100-form validate-form" method="POST">
+					<c:if test="${not empty alert }">
+					<div class="alert alert-${alert}">
+					  <strong>${message}</strong>
+					</div>
+					</c:if>
 					<span class="login100-form-logo">
 						<i class="zmdi zmdi-landscape"></i>
 					</span>
-
 					<span class="login100-form-title p-b-34 p-t-27">
 						Log in
 					</span>
@@ -59,13 +65,13 @@
 							Remember me
 						</label>
 					</div>
-
+					<input type="hidden" value="login" name="action"/>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
 							Login
 						</button>
 					</div>
-
+					
 					<div class="text-center p-t-90">
 						<a class="txt1" href="#">
 							Forgot Password?
