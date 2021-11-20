@@ -10,7 +10,7 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
-  <filter>
+  	<filter>
     <filter-name>filterAdmin</filter-name>
     <filter-class>filter.Filter</filter-class>
 	</filter>

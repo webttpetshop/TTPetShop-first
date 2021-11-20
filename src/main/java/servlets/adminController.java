@@ -62,7 +62,7 @@ public class adminController extends HttpServlet {
 		response.setContentType("text/html;charset-UTF-8");
 
 		/*RequestDispatcher dispatcher = request.getServletContext()
-				.getRequestDispatcher("/WEB-INF/views/admin/adminListUserByPagejsp.jsp");
+				.getRequestDispatcher("/WEB-INF/views/admin/NewFile.jsp");
 		dispatcher.forward(request, response);*/
 		response.sendRedirect (request.getContextPath()+"/adminListUserByPage?page=1");
 	}

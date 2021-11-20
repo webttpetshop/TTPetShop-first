@@ -9,16 +9,13 @@ CREATE TABLE Products (
 	price float NOT NULL DEFAULT '0',
 	categoryID integer,
 	description text,
-	pic VARCHAR,
+	pic VARCHAR ,
 	quantity integer NOT NULL DEFAULT '1',
-	status integer NOT NULL DEFAULT '1',
-	liked integer,
-	viewed integer,
+	liked INTEGER DEFAULT 0,
+	viewed INTEGER DEFAULT 0
 
 )
 GO
-
-
 
 CREATE TABLE Users(
 	userID varchar(20) PRIMARY KEY NOT NULL,

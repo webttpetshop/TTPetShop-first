@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import beans.Users;
+import mapping.UserMapping;
 
 public class DBUtils {
 	public static List<Users> listUser(Connection conn) throws SQLException {
@@ -18,24 +19,7 @@ public class DBUtils {
 		   System.out.println("connected!");
 		   List<Users> list = new ArrayList<Users>();
 		   while (rs.next()) {
-		       String userID = rs.getString("userID");
-		       String password = rs.getString("password");
-		       String fullname = rs.getString("fullname");
-		       String pic = rs.getString("pic");
-		       String address = rs.getString("address");
-		       String phone = rs.getString("phone");
-		       int coins =rs.getInt("coins");
-		       int role =rs.getInt("role");
-		       
-		       Users us = new Users();
-		       us.setUserID(userID);
-		       us.setPassword(password);;
-		       us.setFullname(fullname);
-		       us.setPic(pic);
-		       us.setAddress(address);
-		       us.setPhone(phone);
-		       us.setCoins(coins);
-		       us.setRole(role);
+			   Users us = UserMapping.maUsers(rs);
 		      list.add(us);
 		   }
 		   System.out.println("connect student!");
@@ -57,24 +41,8 @@ public class DBUtils {
 		   System.out.println("connected!");
 		   List<Users> list = new ArrayList<Users>();
 		   while (rs.next()) {
-		       String userID = rs.getString("userID");
-		       String password = rs.getString("password");
-		       String fullname = rs.getString("fullname");
-		       String pic = rs.getString("pic");
-		       String address = rs.getString("address");
-		       String phone = rs.getString("phone");
-		       int coins =rs.getInt("coins");
-		       int role =rs.getInt("role");
-		       
-		       Users us = new Users();
-		       us.setUserID(userID);
-		       us.setPassword(password);;
-		       us.setFullname(fullname);
-		       us.setPic(pic);
-		       us.setAddress(address);
-		       us.setPhone(phone);
-		       us.setCoins(coins);
-		       us.setRole(role);
+
+			   Users us = UserMapping.maUsers(rs);
 		      list.add(us);
 		   }
 		   System.out.println("connect student!");
@@ -91,24 +59,8 @@ public class DBUtils {
 		   System.out.println("begin find!");
 		   //List<Users> list = new ArrayList<Users>();
 		   if (rs.next()) {
-		       String userID = rs.getString("userID");
-		       String pass = rs.getString("password");
-		       String fullname = rs.getString("fullname");
-		       String pic = rs.getString("pic");
-		       String address = rs.getString("address");
-		       String phone = rs.getString("phone");
-		       int coins =rs.getInt("coins");
-		       int role =rs.getInt("role");
-		       
-		       Users us = new Users();
-		       us.setUserID(userID);
-		       us.setPassword(pass);;
-		       us.setFullname(fullname);
-		       us.setPic(pic);
-		       us.setAddress(address);
-		       us.setPhone(phone);
-		       us.setCoins(coins);
-		       us.setRole(role);
+
+			   Users us = UserMapping.maUsers(rs);
 			   System.out.println("end find user and success");
 		       return us;
 

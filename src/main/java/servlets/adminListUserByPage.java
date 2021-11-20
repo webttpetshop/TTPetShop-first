@@ -20,13 +20,13 @@ import utils.DBUtils;
  * Servlet implementation class listUserByPage
  */
 @WebServlet("/adminListUserByPage")
-public class listUserByPage extends HttpServlet {
+public class adminListUserByPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public listUserByPage() {
+    public adminListUserByPage() {
         super();
         // TODO Auto-generated constructor stub
     }

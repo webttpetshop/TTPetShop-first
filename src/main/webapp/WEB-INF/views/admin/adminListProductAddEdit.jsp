@@ -162,7 +162,7 @@
 			</div><!-- /.sidebar-shortcuts -->
 
 			<ul class="nav nav-list">
-				<li class="active">
+				<li class="">
 					<a href='<c:url value="/adminListUserByPage"/>'>
 						<i class="menu-icon fa fa-list-alt"></i>
 						<span class="menu-text"> Danh Sách Users </span>
@@ -170,7 +170,7 @@
 
 					<b class="arrow"></b>
 				</li>
-				<li class="">
+				<li class="active">
 					<a href='<c:url value="/adminListProduct"/>'>
 						<i class="menu-icon fa fa-list-alt"></i>
 						<span class="menu-text"> Danh Sách Sản Phẩm </span>
@@ -199,7 +199,7 @@
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="adminListUserByPage">Danh sách Users </a>
+							<a href="adminListProduct">Danh sách Sản Phẩm </a>
 						</li>
 					</ul>
 				</div>
@@ -227,60 +227,82 @@
 					</div>
 					<div class="row" >
 						<div class="col-xs-12">
-							<input class="form-control" id="myInput" type="text" placeholder="Search..">
-  							<br>
-							   <div class="row">
-										<div class="col-xs-12">
-											<table class="table table-condensed">
-												<thead>
-												  <tr>
-													<th>userID</th>
-													<th>password</th>
-													<th>fullname</th>
-													<th>pic</th>
-													<th>address</th>
-													<th>phone</th>
-													<th>coins</th>
-													<th>Actions</th>
-												  </tr>
-												</thead>
-												<tbody id="myTable">
-												    <c:forEach items="${userList}" var="us" >
-												       <tr>
-												          <td>${us.userID}</td>
-												          <td>${us.password}</td>
-												          <td>${us.fullname}</td>
-												          <td>${us.pic}</td>
-												          <td>${us.address}</td>
-												          <td>${us.phone}</td>
-												          <td>${us.coins}</td>
-														  <td>
-															<c:url var="editURL" value="/admin-new">
-																<c:param name="type" value="edit"/>
-																<c:param name="id" value="${us.userID}"/>
-														  	</c:url>
-															<a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-															   title="Edit" href='${editURL}'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-															</a>
-														</td>
-												       </tr>
-												    </c:forEach>												
-												</tbody>
-											</table>
-											<nav aria-label="Page navigation example">
-												<ul class="pagination justify-content-end">
-												  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-												  <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
-												  <li class="page-item"><a class="page-link" href="#">2</a></li>
-												  <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-												  <c:forEach begin="1" end="${total}" var="i">
-														<li class="page-item"><a class="page-link" href="adminListUserByPage?page=${i}">${i}</a></li>													
-												  </c:forEach>
-												  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-												</ul>
-											  </nav>
-										</div>
-							   </div>
+							<c:if test="${not empty message}">
+									<div class="alert alert-${alert}">
+											${message}
+									</div>
+							</c:if>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right">Loại Sản Phẩm</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="categoryCode" name="categoryCode">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										koption>4</option>
+									</select>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right">Mã Sản Phẩm</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="productID" name="productID" value=""/>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right">Tên Sản Phẩm</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="productID" name="productID" value=""/>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right">Giá</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="price" name="price" value=""/>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right">Mô tả</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="description" name="description" value=""/>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right">Số Lượng</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="quantity" name="quantity" value=""/>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right">Lượt Xem</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="viewed" name="viewed" value=""/>
+								</div>
+							</div>
+							<br/>
+							<br/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right">Hình Ảnh</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="pic" name="pic" value=""/>
+								</div>
+							</div>
+
+
+
+						
 						</div>
 					</div>
 				</div><!-- /.page-content -->
@@ -657,4 +679,3 @@
 </script>
 </body>
 
-</html>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
@@ -124,12 +124,16 @@
 
 	<div class="main-container" id="main-container">
 		<script type="text/javascript">
-			try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {}
 		</script>
 
 		<div id="sidebar" class="sidebar                  responsive">
 			<script type="text/javascript">
-				try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+				try {
+					ace.settings.check('sidebar', 'fixed')
+				} catch (e) {}
 			</script>
 			<div class="sidebar-shortcuts" id="sidebar-shortcuts">
 				<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
@@ -162,7 +166,7 @@
 			</div><!-- /.sidebar-shortcuts -->
 
 			<ul class="nav nav-list">
-				<li class="active">
+				<li class="">
 					<a href='<c:url value="/adminListUserByPage"/>'>
 						<i class="menu-icon fa fa-list-alt"></i>
 						<span class="menu-text"> Danh Sách Users </span>
@@ -170,7 +174,7 @@
 
 					<b class="arrow"></b>
 				</li>
-				<li class="">
+				<li class="active">
 					<a href='<c:url value="/adminListProduct"/>'>
 						<i class="menu-icon fa fa-list-alt"></i>
 						<span class="menu-text"> Danh Sách Sản Phẩm </span>
@@ -181,11 +185,14 @@
 			</ul><!-- /.nav-list -->
 
 			<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-				<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left"
+					data-icon2="ace-icon fa fa-angle-double-right"></i>
 			</div>
 
 			<script type="text/javascript">
-				try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+				try {
+					ace.settings.check('sidebar', 'collapsed')
+				} catch (e) {}
 			</script>
 		</div>
 
@@ -193,13 +200,15 @@
 			<div class="main-content-inner">
 				<div class="breadcrumbs" id="breadcrumbs">
 					<script type="text/javascript">
-						try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {}
 					</script>
 
 					<ul class="breadcrumb">
 						<li>
 							<i class="ace-icon fa fa-home home-icon"></i>
-							<a href="adminListUserByPage">Danh sách Users </a>
+							<a href="adminListProduct">Danh sách Sản Phẩm </a>
 						</li>
 					</ul>
 				</div>
@@ -209,78 +218,82 @@
 						<div class="table-btn-controls">
 							<div class="pull-right tableTools-container">
 								<div class="dt-buttons btn-overlap btn-group">
-									<a flag="info"
-									   class="dt-button buttons-colvis btn btn-white btn-primary btn-bold" data-toggle-"tooltip"
-									   title='Thêm User' href='<c:url value="/admin-new?type=edit"/>'>
-												<span>
-												   <i class="fa fa-plus-circle bigger-110 purple"></i>
-												</span>
+									<a flag="info" class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
+										data-toggle-"tooltip" title='Thêm User'
+										href='<c:url value="/admin-new?type=edit"/>'>
+										<span>
+											<i class="fa fa-plus-circle bigger-110 purple"></i>
+										</span>
 									</a>
-									<button id="btnīelete" type="button" class="dt-button buttons-htm15 btn btn-white btn-primary btn-bold" data-toggle="tooltip" title="Xóa User">
-													<span>
-													   <i class="fa fa-trash-o bigger-110 pink"></i>
-													</span>
+									<button id="btnīelete" type="button"
+										class="dt-button buttons-htm15 btn btn-white btn-primary btn-bold"
+										data-toggle="tooltip" title="Xóa User">
+										<span>
+											<i class="fa fa-trash-o bigger-110 pink"></i>
+										</span>
 									</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row" >
+					<div class="row">
 						<div class="col-xs-12">
 							<input class="form-control" id="myInput" type="text" placeholder="Search..">
-  							<br>
-							   <div class="row">
-										<div class="col-xs-12">
-											<table class="table table-condensed">
-												<thead>
-												  <tr>
-													<th>userID</th>
-													<th>password</th>
-													<th>fullname</th>
-													<th>pic</th>
-													<th>address</th>
-													<th>phone</th>
-													<th>coins</th>
-													<th>Actions</th>
-												  </tr>
-												</thead>
-												<tbody id="myTable">
-												    <c:forEach items="${userList}" var="us" >
-												       <tr>
-												          <td>${us.userID}</td>
-												          <td>${us.password}</td>
-												          <td>${us.fullname}</td>
-												          <td>${us.pic}</td>
-												          <td>${us.address}</td>
-												          <td>${us.phone}</td>
-												          <td>${us.coins}</td>
-														  <td>
-															<c:url var="editURL" value="/admin-new">
-																<c:param name="type" value="edit"/>
-																<c:param name="id" value="${us.userID}"/>
-														  	</c:url>
-															<a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
-															   title="Edit" href='${editURL}'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-															</a>
-														</td>
-												       </tr>
-												    </c:forEach>												
-												</tbody>
-											</table>
-											<nav aria-label="Page navigation example">
-												<ul class="pagination justify-content-end">
-												  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-												  <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
+							<br>
+							<div class="row">
+								<div class="col-xs-12">
+									<table class="table table-condensed">
+										<thead>
+											<tr>
+												<th>userID</th>
+												<th>password</th>
+												<th>fullname</th>
+												<th>pic</th>
+												<th>address</th>
+												<th>phone</th>
+												<th>coins</th>
+												<th>Actions</th>
+											</tr>
+										</thead>
+										<tbody id="myTable">
+											<c:forEach items="${userList}" var="us">
+												<tr>
+													<td>${us.userID}</td>
+													<td>${us.password}</td>
+													<td>${us.fullname}</td>
+													<td>${us.pic}</td>
+													<td>${us.address}</td>
+													<td>${us.phone}</td>
+													<td>${us.coins}</td>
+													<td>
+														<c:url var="editURL" value="/admin-new">
+															<c:param name="type" value="edit" />
+															<c:param name="id" value="${us.userID}" />
+														</c:url>
+														<a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+															title="Edit" href='${editURL}'><i
+																class="fa fa-pencil-square-o" aria-hidden="true"></i>
+														</a>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+									<nav aria-label="Page navigation example">
+										<ul class="pagination justify-content-end">
+											<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+											<!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
 												  <li class="page-item"><a class="page-link" href="#">2</a></li>
 												  <li class="page-item"><a class="page-link" href="#">3</a></li> -->
-												  <c:forEach begin="1" end="${total}" var="i">
-														<li class="page-item"><a class="page-link" href="adminListUserByPage?page=${i}">${i}</a></li>													
-												  </c:forEach>
-												  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-												</ul>
-											  </nav>
-										</div>
-							   </div>
+											<c:forEach begin="1" end="${total}" var="i">
+												<li class="page-item"><a class="page-link"
+														href="adminListUserByPage?page=${i}">${i}</a></li>
+											</c:forEach>
+											<li class="page-item"><a class="page-link" href="#">Next</a></li>
+										</ul>
+									</nav>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div><!-- /.page-content -->
@@ -294,17 +307,17 @@
 							<span class="blue bolder">Ace</span>
 							Application &copy; 2013-2014
 						</span>
-	
+
 						&nbsp; &nbsp;
 						<span class="action-buttons">
 							<a href="#">
 								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
 							</a>
-	
+
 							<a href="#">
 								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
 							</a>
-	
+
 							<a href="#">
 								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
 							</a>
@@ -314,7 +327,7 @@
 			</div>
 		</div><!-- /.main-content -->
 
-		
+
 	</div><!-- /.main-container -->
 
 	<!-- basic scripts -->
@@ -359,9 +372,15 @@
 	<script src="assets/js/jquery.flot.pie.min.js"></script>
 	<script src="assets/js/jquery.flot.resize.min.js"></script>
 	<!-- paging -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+	</script>
 
 
 	<!-- ace scripts -->
@@ -644,17 +663,15 @@
 			});
 		});
 	</script>
-	
-	<script>
-		$(document).ready(function(){
-		  $("#myInput").on("keyup", function() {
-		    var value = $(this).val().toLowerCase();
-		    $("#myTable tr").filter(function() {
-		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		    });
-		  });
-		});
-</script>
-</body>
 
-</html>
+	<script>
+		$(document).ready(function () {
+			$("#myInput").on("keyup", function () {
+				var value = $(this).val().toLowerCase();
+				$("#myTable tr").filter(function () {
+					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+				});
+			});
+		});
+	</script>
+</body>
