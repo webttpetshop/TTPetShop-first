@@ -15,7 +15,7 @@ public class SQLServerConnection {
 	        //Database name to access
 	        String dbName = "TTPetShop";
 	        String dbusername ="sa";
-	        String dbPassword ="141121";
+	        String dbPassword ="sa";
 	        String connectionURL = dbURL + ";databasename=" + dbName;//?
 	        Connection conn= null;
 	        try {
@@ -26,8 +26,17 @@ public class SQLServerConnection {
 	            System.out.println("connect failure!");
 	            ex.printStackTrace();
 	         }
+	        
 	                                         
 	        return conn;
 	}
+	//test connection
+//	public static void main(String[] args) {
+//	try {
+//		System.out.println(new SQLServerConnection().initializeDatabase());
+//	} catch (Exception e) {
+//		
+//	}
+//}
 
 }
