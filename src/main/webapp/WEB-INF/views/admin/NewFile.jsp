@@ -2,9 +2,47 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
+<%@ page import="java.util.*" %>
+<%@ page import="com.google.gson.Gson"%>
+<%@ page import="com.google.gson.JsonObject"%>
+ 
+<%
+Gson gsonObj = new Gson();
+Map<Object,Object> map = null;
+List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();
+ 
+map = new HashMap<Object,Object>(); map.put("label", "FY07"); map.put("y", 188); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY08"); map.put("y", 213); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY09"); map.put("y", 213); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY10"); map.put("y", 219); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY11"); map.put("y", 207); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY12"); map.put("y", 167); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY13"); map.put("y", 136); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY14"); map.put("y", 152); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY15"); map.put("y", 129); list.add(map);
+map = new HashMap<Object,Object>(); map.put("label", "FY16"); map.put("y", 155); list.add(map);
+ 
+String dataPoints = gsonObj.toJson(list);
 
+Gson gsonObj1 = new Gson();
+Map<Object,Object> map1 = null;
+List<Map<Object,Object>> list1 = new ArrayList<Map<Object,Object>>();
+ 
+map1 = new HashMap<Object,Object>(); map1.put("label", "Health"); map1.put("y", 35); map1.put("exploded", true); list1.add(map1);
+map1 = new HashMap<Object,Object>(); map1.put("label", "Finance"); map1.put("y", 20); list1.add(map1);
+map1 = new HashMap<Object,Object>(); map1.put("label", "Career"); map1.put("y", 18); list1.add(map1);
+map1 = new HashMap<Object,Object>(); map1.put("label", "Education"); map1.put("y", 15); list1.add(map1);
+map1 = new HashMap<Object,Object>(); map1.put("label", "Family"); map1.put("y", 5); list1.add(map1);
+map1 = new HashMap<Object,Object>(); map1.put("label", "Real Estate"); map1.put("y", 7); list1.add(map1);
+ 
+String dataPoints1 = gsonObj1.toJson(list1);
+%>
+
+
+
+ 
+<!DOCTYPE HTML>
+<html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta charset="utf-8" />
@@ -12,6 +50,51 @@
 
 	<meta name="description" content="overview &amp; stats" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+	
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+window.onload = function() { 
+ 
+	var chart = new CanvasJS.Chart("chartContainer", {
+		theme: "light2",
+		title: {
+			text: "Iron Ore Production in India"
+		},
+		axisX: {
+			title: "Fiscal Year"
+		},
+		axisY: {
+			title: "Production ( in million tonnes )",
+			includeZero: true
+		},
+		data: [{
+			type: "line",
+			yValueFormatString: "#,##0mn tonnes",
+			dataPoints : <%out.print(dataPoints);%>
+		}]
+	});
+	var chart1 = new CanvasJS.Chart("chartContainer1", {
+			theme: "light2",
+			animationEnabled: true,
+			exportFileName: "New Year Resolutions",
+			exportEnabled: true,
+			title:{
+				text: "Top Categories of New Year's Resolution"
+			},
+			data: [{
+				type: "pie",
+				showInLegend: true,
+				legendText: "{label}",
+				toolTipContent: "{label}: <strong>{y}%</strong>",
+				indexLabel: "{label} {y}%",
+				dataPoints : <%out.print(dataPoints1);%>
+			}]
+		});
+	chart.render();
+	chart1.render();
+ 
+}
+</script>
 
 
 
@@ -41,15 +124,7 @@
 	<script src="assets/js/ace-extra.min.js"></script>
 	<!-- pagiantion -->
 	<link rel="stylesheet" href="assets/BS/assets/bootstrap.css" />
-	<!-- end pagination -->
-	<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
-
-	<!--[if lte IE 8]>
-		<script src="assets/js/html5shiv.min.js"></script>
-		<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
 </head>
-
 <body class="no-skin">
 	<div id="navbar" class="navbar navbar-default">
 		<script type="text/javascript">
@@ -121,7 +196,6 @@
 			</div>
 		</div><!-- /.navbar-container -->
 	</div>
-
 	<div class="main-container" id="main-container">
 		<script type="text/javascript">
 			try{ace.settings.check('main-container' , 'fixed')}catch(e){}
@@ -188,8 +262,8 @@
 				try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
 			</script>
 		</div>
-
-		<div class="main-content">
+		
+				<div class="main-content">
 			<div class="main-content-inner">
 				<div class="breadcrumbs" id="breadcrumbs">
 					<script type="text/javascript">
@@ -283,39 +357,17 @@
 							   </div>
 						</div>
 					</div>
+       						<div class = "col-md-6">
+          						<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+						    </div>
+							<div class = "col-md-6">
+								<div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+							</div>
 				</div><!-- /.page-content -->
 			</div>
 
-
-			<div class="footer">
-				<div class="footer-inner">
-					<div class="footer-content">
-						<span class="bigger-120">
-							<span class="blue bolder">Ace</span>
-							Application &copy; 2013-2014
-						</span>
-	
-						&nbsp; &nbsp;
-						<span class="action-buttons">
-							<a href="#">
-								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
-							</a>
-	
-							<a href="#">
-								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
-							</a>
-	
-							<a href="#">
-								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
-							</a>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div><!-- /.main-content -->
-
-		
-	</div><!-- /.main-container -->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</div><!-- /.main-container -->
 
 	<!-- basic scripts -->
 
@@ -656,5 +708,4 @@
 		});
 </script>
 </body>
-
-</html>
+</html>       
