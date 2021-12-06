@@ -3,25 +3,57 @@ go
 USE TTPetShop
 go
 
+CREATE TABLE review (
+	id INT PRIMARY KEY IDENTITY,
+	productID INT REFERENCES dbo.Products(productID),
+	userID varchar(20) REFERENCES dbo.Users(userID),
+	rating FLOAT DEFAULT 0,
+	review TEXT,
+)
+go
 CREATE TABLE Products (
-	productID INT PRIMARY KEY NOT NULL,
-	name nvarchar NOT NULL,
+	productID INT PRIMARY KEY IDENTITY NOT NULL,
+	name NVARCHAR(255) NOT NULL,
 	price float NOT NULL DEFAULT '0',
 	categoryID integer,
 	description text,
-	pic VARCHAR ,
+	pic VARBINARY(MAX) ,
 	quantity integer NOT NULL DEFAULT '1',
-	liked INTEGER DEFAULT 0,
 	viewed INTEGER DEFAULT 0
 
 )
 GO
 
+
+SELECT * FROM dbo.Products
+GO
+---------------------------------------------------------------------------------------------
+CREATE PROC updatePro @id INT, @name NVARCHAR(255), @price FLOAT, @categoryID INTEGER, @description TEXT, @pic VARBINARY(MAX), @quantity INTEGER, @viewed INTEGER
+AS
+BEGIN
+	IF (DATALENGTH(@pic)!=0)
+	BEGIN
+		UPDATE dbo.Products SET name=@name, price=@price, categoryID=@categoryID, description=@description, pic=@pic, quantity=@quantity, viewed=@viewed WHERE productID=@id
+	END
+	ELSE
+	BEGIN
+		UPDATE dbo.Products SET name=@name, price=@price, categoryID=@categoryID, description=@description, quantity=@quantity, viewed=@viewed WHERE productID=@id
+	END
+END
+go
+
+CREATE PROC getProByID @id INT
+AS
+BEGIN
+    SELECT *
+	FROM dbo.Products WHERE productID=@id
+END
+go
+-------------------------------------------------------------------------------------------------
 CREATE TABLE Users(
 	userID varchar(20) PRIMARY KEY NOT NULL,
 	password varchar(20) NOT NULL,
 	fullname NVARCHAR(255) NOT NULL,
-	pic VARCHAR,
 	address VARCHAR(255),
 	phone varchar(50),
 	coins integer NOT NULL DEFAULT 0,
@@ -29,11 +61,9 @@ CREATE TABLE Users(
 )
 GO
 
-SELECT * from (SELECT ROW_NUMBER() OVER (ORDER BY coins) AS r, *FROM dbo.Users) AS sub  WHERE sub.r between 1*3+1 AND 2*3
+SELECT * from (SELECT ROW_NUMBER() OVER (ORDER BY coins) AS r, *FROM dbo.Users) AS sub  WHERE sub.r between 0*3+1 AND 1*3
 go
 
-SELECT DISTINCT * FROM dbo.Users WHERE userID='thanh141121'
-go
 
 INSERT INTO dbo.Users
 (
@@ -250,4 +280,4 @@ go
 SELECT * FROM dbo.Bill
 go
 
-
+-----------------------------------------------------------store proc-------------------------------------------------------
