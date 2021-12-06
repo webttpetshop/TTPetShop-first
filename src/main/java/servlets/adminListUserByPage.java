@@ -45,19 +45,19 @@ public class adminListUserByPage extends HttpServlet {
 
 		List<Users> list = null;
 		List<Users> list1 = null;
-		int totalpage = 3;
+		int totalpage = 10;
 		try {
 			String spageid= request.getParameter ("page") ; //tìm ra id của phần tử đầu tiên của trang
 			if (spageid== null)
 					spageid="1";
 			int pageid= Integer.parseInt(spageid);
-			int totalitem = 3; // số item trên 1 trang
+			//int totalitem = 3; // số item trên 1 trang
 			/*if (pageid==1){}
 			else{
 			    pageid=pageid-1;
 			    pageid=pageid*totalitem +1;
 			}*/
-		   list = DBUtils.getRcord(conn, pageid, totalitem);
+		   list = DBUtils.getRcord(conn, pageid, totalpage);
 		   System.out.println("connect listUsersByPage successfully!");
 		   list1 = DBUtils.listUser(conn);
 		 } catch (SQLException e) {

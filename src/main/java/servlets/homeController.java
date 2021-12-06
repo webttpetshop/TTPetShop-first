@@ -85,7 +85,8 @@ public class homeController extends HttpServlet {
 		       if (model.getRole()==0) {
 		            response.sendRedirect (request.getContextPath()+"/home");
 		       } else
-		            response.sendRedirect (request.getContextPath()+"/adminListUserByPage?page=1");
+		            //response.sendRedirect (request.getContextPath()+"/adminListUserByPage?page=1");
+		    	   response.sendRedirect (request.getContextPath()+"/admin-list-user");
 		   } else
 		        response.sendRedirect (request.getContextPath () +"/log-in?action=login&message=username_password_invalid&alert=danger");
 			}

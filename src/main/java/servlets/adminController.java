@@ -46,23 +46,36 @@ public class adminController extends HttpServlet {
 		 }
 
 		List<Users> list = null;
+		int totalpage = 10;
 		try {
-		   list = DBUtils.listUser(conn);
-		   System.out.println("connect listUsers successfully!");
+			String spageid= request.getParameter ("page") ; //tìm ra id của phần tử đầu tiên của trang
+			if (spageid== null)
+					spageid="1";
+			int pageid= Integer.parseInt(spageid);
+			//int totalitem = 3; // số item trên 1 trang
+			/*if (pageid==1){}
+			else{
+			    pageid=pageid-1;
+			    pageid=pageid*totalitem +1;
+			}*/
+		   list = DBUtils.getRcord(conn, pageid, totalpage);
+		   System.out.println("connect listUsersByPage successfully!");
+		   //list1 = DBUtils.listUser(conn);
 		 } catch (SQLException e) {
 		    e.printStackTrace();
 		 }
+
 		request.setAttribute("userList", list);
-		int total = list.size()/2;
+		int total = list.size()/totalpage;  // tổng số trang
 		System.out.println(list.size());
-		if((total % 2) !=0)
+		if((total % totalpage) !=0)
 			total++;
 		request.setAttribute("total",total );
 		// Forward sang /WEB-INF/views/productListView.jsp
 		response.setContentType("text/html;charset-UTF-8");
 
 		RequestDispatcher dispatcher = request.getServletContext()
-				.getRequestDispatcher("/WEB-INF/views/admin/NewFile.jsp");
+				.getRequestDispatcher("/WEB-INF/views/admin/NewFile1.jsp");
 		dispatcher.forward(request, response);
 		//response.sendRedirect (request.getContextPath()+"/adminListUserByPage?page=1");
 	}

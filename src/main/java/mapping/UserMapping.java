@@ -12,7 +12,6 @@ public class UserMapping {
 			String userID = rs.getString("userID");
 		       String password = rs.getString("password");
 		       String fullname = rs.getString("fullname");
-		       String pic = rs.getString("pic");
 		       String address = rs.getString("address");
 		       String phone = rs.getString("phone");
 		       int coins =rs.getInt("coins");
@@ -22,7 +21,6 @@ public class UserMapping {
 		       us.setUserID(userID);
 		       us.setPassword(password);;
 		       us.setFullname(fullname);
-		       us.setPic(pic);
 		       us.setAddress(address);
 		       us.setPhone(phone);
 		       us.setCoins(coins);

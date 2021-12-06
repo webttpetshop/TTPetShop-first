@@ -6,9 +6,20 @@ public class Products {
 	private float price ;
 	private int categoryID ;
 	private String description ;
-	private String pic ;
 	private int quantity ;
 	private int viewed;
+
+	
+	private String base64Image;
+	 
+	 
+    public String getBase64Image() {
+        return base64Image;
+    }
+ 
+    public void setBase64Image(String base64Image) {
+        this.base64Image = base64Image;
+    }
 	
 	public int getProductID() {
 		return productID;
@@ -40,12 +51,7 @@ public class Products {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getPic() {
-		return pic;
-	}
-	public void setPic(String pic) {
-		this.pic = pic;
-	}
+	
 	public int getQuantity() {
 		return quantity;
 	}

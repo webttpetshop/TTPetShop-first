@@ -1,7 +1,9 @@
 package mapping;
 
+import java.sql.Blob;
 import java.sql.ResultSet;
 
+import Bind.Bindimg;
 import beans.Products;
 
 public class ProductMapping {
@@ -12,11 +14,11 @@ public class ProductMapping {
 			pd.setProductID(rs.getInt("productID"));
 			pd.setName(rs.getString("name"));
 			pd.setPrice(rs.getFloat("price"));
-			pd.setProductID(rs.getInt("categoryID"));
-			pd.setName(rs.getString("description"));
-			pd.setName(rs.getString("pic"));
-			pd.setProductID(rs.getInt("quantity"));
-			pd.setProductID(rs.getInt("viewed"));
+			pd.setCategoryID(rs.getInt("categoryID"));
+			pd.setDescription(rs.getString("description"));
+			pd.setQuantity(rs.getInt("quantity"));
+			pd.setViewed(rs.getInt("viewed"));
+			pd.setBase64Image(Bindimg.img(rs.getBlob("pic")));
 			return pd;
 			
 		} catch (Exception e) {

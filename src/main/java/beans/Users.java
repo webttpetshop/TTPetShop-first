@@ -22,12 +22,6 @@ public class Users {
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
-	public String getPic() {
-		return pic;
-	}
-	public void setPic(String pic) {
-		this.pic = pic;
-	}
 	public String getAddress() {
 		return address;
 	}
@@ -48,7 +42,6 @@ public class Users {
 	}
 	private String password;
 	private String fullname;
-	private String pic;
 	private String address;
 	private String phone;
 	private int coins;

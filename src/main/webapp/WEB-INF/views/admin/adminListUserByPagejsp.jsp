@@ -237,7 +237,6 @@
 													<th>userID</th>
 													<th>password</th>
 													<th>fullname</th>
-													<th>pic</th>
 													<th>address</th>
 													<th>phone</th>
 													<th>coins</th>
@@ -250,7 +249,6 @@
 												          <td>${us.userID}</td>
 												          <td>${us.password}</td>
 												          <td>${us.fullname}</td>
-												          <td>${us.pic}</td>
 												          <td>${us.address}</td>
 												          <td>${us.phone}</td>
 												          <td>${us.coins}</td>

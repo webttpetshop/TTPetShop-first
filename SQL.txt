@@ -165,10 +165,81 @@ CREATE TABLE DetailBill (
 GO
 CREATE TABLE Category (
 	categoryID integer PRIMARY KEY ,
-	nameCat VARCHAR(255),
+	nameCat Nvarchar(255)
 
 )
 GO
+INSERT INTO dbo.Category
+(
+    categoryID,
+    nameCat
+)
+VALUES
+(   1, -- categoryID - int
+    N'Chuồng cho thú cưng' -- nameCat - varchar(255)
+    )
+
+INSERT INTO dbo.Category
+(
+    categoryID,
+    nameCat
+)
+VALUES
+(   2, -- categoryID - int
+    N'Đồ chơi cho thú cưng' -- nameCat - varchar(255)
+    )
+INSERT INTO dbo.Category
+(
+    categoryID,
+    nameCat
+)
+VALUES
+(   3, -- categoryID - int
+    N'Phụ kiện cho thú cưng' -- nameCat - varchar(255)
+    )
+
+INSERT INTO dbo.Category
+(
+    categoryID,
+    nameCat
+)
+VALUES
+(   4, -- categoryID - int
+    N'Thức ăn cho thú cưng' -- nameCat - varchar(255)
+    )
+
+INSERT INTO dbo.Category
+(
+    categoryID,
+    nameCat
+)
+VALUES
+(   5, -- categoryID - int
+    N'Thuốc cho thú cưng' -- nameCat - varchar(255)
+    )
+
+INSERT INTO dbo.Category
+(
+    categoryID,
+    nameCat
+)
+VALUES
+(   6, -- categoryID - int
+    N'Thời trang cho thú cưng' -- nameCat - varchar(255)
+    )
+
+INSERT INTO dbo.Category
+(
+    categoryID,
+    nameCat
+)
+VALUES
+(   7, -- categoryID - int
+    N'Dịch vụ khác...' -- nameCat - varchar(255)
+    )
+
+go
+------------------------------------------------------
 ALTER TABLE Products WITH CHECK ADD CONSTRAINT Products_fk0 FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
 go
 

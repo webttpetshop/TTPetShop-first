@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import beans.Users;
 import utils.SessionUtils;
 
-//@WebFilter(filterName="/JDBCFilter", urlPatterns = {"/*"})
+@WebFilter(filterName="JDBCFilter", urlPatterns = {"/admin*"})
 public class Filter implements javax.servlet.Filter{
 	private ServletContext context;
 
@@ -31,8 +31,9 @@ public class Filter implements javax.servlet.Filter{
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response =(HttpServletResponse) servletResponse;
 		String url = request.getRequestURI(); 
+		System.out.println("--------------------------------------");
 		System.out.println(url);
-		//if (url.startsWith("/admin")) {
+		if (url.startsWith("/admin")) {
 			Users model = (Users) SessionUtils.getInstance().getValue(request, "USERMODEL");
 			if (model != null) {
 				if (model.getRole()==1) {
@@ -46,10 +47,10 @@ public class Filter implements javax.servlet.Filter{
 				System.out.println("2");
 				response.sendRedirect (request.getContextPath() +"/log-in?action=login&message=not_login&alert=danger");
 			}
-		/*}else{
+		}else{
 			System.out.println("3");
 			chain.doFilter(servletRequest, servletResponse);
-		}*/
+		}
 	}
 
 	@Override

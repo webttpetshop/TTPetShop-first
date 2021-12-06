@@ -9,14 +9,4 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
-  	<filter>
-    <filter-name>filterAdmin</filter-name>
-    <filter-class>filter.Filter</filter-class>
-	</filter>
-	<filter-mapping>
-    <filter-name>filterAdmin</filter-name>
-    <url-pattern>/adminListUserByPage</url-pattern>
-    <url-pattern>/adminListUserByPagejsp.jsp</url-pattern>
-	</filter-mapping>
 </web-app>
