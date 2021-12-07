@@ -96,7 +96,7 @@ pageEncoding="UTF-8"%>
                                                                     alt="${us.name}" title="${us.name}" /></div>
                                                         </td>
                                                         <td>${us.name}</td>
-                                                        <td>${us.price}</td>
+                                                        <td>${us.price} &#8363</td>
                                                         <td>${us.categoryID}</td>
                                                         <td>${us.description}</td>
                                                         <td>${us.quantity}</td>

@@ -192,6 +192,10 @@ ol {
     left: 20px;
 }
 
+.backtop {
+	z-index:5
+}
+
 .fb:hover,
 .backtop:hover,
 .fb:hover,
