@@ -53,7 +53,7 @@ public class homeController extends HttpServlet {
 		    response.sendRedirect(request.getContextPath() +"/home");
 		 } else {
 		    //request.setAttribute("categories", categoryService.findAll ());
-			 RequestDispatcher rd=  request.getRequestDispatcher ("/WEB-INF/views/web/home.jsp"); 
+			 RequestDispatcher rd=  request.getRequestDispatcher ("/WEB-INF/views/web/NewFile.jsp"); 
 		   rd.forward (request, response);
 		 }
 	}

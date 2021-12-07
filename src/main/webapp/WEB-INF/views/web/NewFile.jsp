@@ -5,6 +5,7 @@
 <html lang="zxx">
 
 <head>
+    <jsp:include page="/WEB-INF/views/admin/SUB_head.jsp" />
     <meta charset="UTF-8">
     <meta name="description" content="Ogani Template">
     <meta name="keywords" content="Ogani, unica, creative, html">
@@ -24,6 +25,9 @@
     <link rel="stylesheet" href="assetsWEB/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="assetsWEB/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="assetsWEB/css/style.css" type="text/css">
+    
+    
+    <link rel="stylesheet" href="assetsWEB/css/New_header.css" type="text/css">
 
 
 
@@ -49,171 +53,277 @@
     
     <!-- Humberger End -->
 
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__left">
-                            <ul>
-                                <li><i class="fa fa-envelope"></i> tamphamasd@gmail.com</li>
-                                <li>Miễn phí vận chuyển cho đơn hàng trên 300.000đ</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="https://www.facebook.com/quitam.pham"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <!--<a href="#"><i class="fa fa-pinterest-p"></i></a>-->
+    <div class="super_container">
+        <!-- Header -->
+        <header class="header">
+            <!-- Top Bar -->
+            <div class="top_bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col d-flex flex-row">
+                            <div class="top_bar_contact_item">
+                                <div class="top_bar_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918577/phone.png" alt=""></div>+91 9823 132 111
                             </div>
-                            <div class="header__top__right__language">
-                                <img src="assetsWEB/img/vie-language.png" alt="">
-                                <div>Options</div>
-
-                                <c:if test="${not empty USERMODEL }">
-                                    <span class="arrow_carrot-down"></span>
-                                    <ul>
-                                        <li><a href="#">Edit Profile</a></li>
-                                        <li><a href='<c:url value="/log-out?action=logout"/>'>Logout</a></li>
+                            <div class="top_bar_contact_item">
+                                <div class="top_bar_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918597/mail.png" alt=""></div><a href="mailto:fastsales@gmail.com">contact@bbbootstrap.com</a>
+                            </div>
+                            <div class="top_bar_content ml-auto">
+                                <div class="top_bar_menu">
+                                    <ul class="standard_dropdown top_bar_dropdown">
+                                        <li> <a href="#">English<i class="fas fa-chevron-down"></i></a>
+                                            <ul>
+                                                <li><a href="#">Italian</a></li>
+                                                <li><a href="#">Spanish</a></li>
+                                                <li><a href="#">Japanese</a></li>
+                                            </ul>
+                                        </li>
+                                        <li> <a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
+                                            <ul>
+                                                <li><a href="#">EUR Euro</a></li>
+                                                <li><a href="#">GBP British Pound</a></li>
+                                                <li><a href="#">JPY Japanese Yen</a></li>
+                                            </ul>
+                                        </li>
                                     </ul>
-                                </c:if>
+                                </div>
+                                <div class="top_bar_user">
+                                    <div class="user_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918647/user.svg" alt=""></div>
+                                    <div><a href="#">Register</a></div>
+                                    <div><a href="#">Sign in</a></div>
+                                </div>
                             </div>
-                            <c:if test="${not empty USERMODEL }">
-                                <div class="header__top__right__auth">
-                                    <a href="#"><i class="fa fa-user"></i>${USERMODEL.fullname}</a>
-                                </div>
-                            </c:if>
-                            <c:if test="${empty USERMODEL }">
-                                <div class="header__top__right__auth">
-                                    <a href='<c:url value="/log-in?action=login"/>'><i class="fa fa-user"></i>Đăng Nhập</a>
-                                </div>
-                            </c:if>           
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                <marquee behavior="scroll" direction="left">Your scrolling text goes here</marquee>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="assetsWEB/img/TTPETSHOP.png" alt=""></a>
+            </div> <!-- Header Main -->
+            <div class="header_main">
+                <div class="container">
+                    <div class="row">
+                        <!-- Logo -->
+                        <div class="col-lg-2 col-sm-3 col-3 order-1">
+                            <div class="logo_container">
+                                <div class="logo"><a href="#">TTPetShop</a></div>
+                            </div>
+                        </div> <!-- Search -->
+                        <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+                            <div class="header_search">
+                                <div class="header_search_content">
+                                    <div class="header_search_form_container">
+                                        <form action="#" class="header_search_form clearfix"> <input type="search" required="required" class="header_search_input" placeholder="Search for products...">
+                                            <div class="custom_dropdown" style="display: none;">
+                                                <div class="custom_dropdown_list"> <span class="custom_dropdown_placeholder clc">All Categories</span> <i class="fas fa-chevron-down"></i>
+                                                    <ul class="custom_list clc">
+                                                        <li><a class="clc" href="#">All Categories</a></li>
+                                                        <li><a class="clc" href="#">Computers</a></li>
+                                                        <li><a class="clc" href="#">Laptops</a></li>
+                                                        <li><a class="clc" href="#">Cameras</a></li>
+                                                        <li><a class="clc" href="#">Hardware</a></li>
+                                                        <li><a class="clc" href="#">Smartphones</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div> <button type="submit" class="header_search_button trans_300" value="Submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- Wishlist -->
+                        <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
+                            <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
+                                <div class="wishlist d-flex flex-row align-items-center justify-content-end">
+                                    <div class="wishlist_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918681/heart.png" alt=""></div>
+                                    <div class="wishlist_content">
+                                        <div class="wishlist_text"><a href="#">Wishlist</a></div>
+                                        <div class="wishlist_count">10</div>
+                                    </div>
+                                </div> <!-- Cart -->
+                                <div class="cart">
+                                    <div class="cart_container d-flex flex-row align-items-center justify-content-end">
+                                        <div class="cart_icon"> <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918704/cart.png" alt="">
+                                            <div class="cart_count"><span>3</span></div>
+                                        </div>
+                                        <div class="cart_content">
+                                            <div class="cart_text"><a href="#">Cart</a></div>
+                                            <div class="cart_price">$185</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><a href="./index.html">Trang chủ</a></li>
-                            <li><a href="./shop-grid.html">Shop</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="#">Chó</a></li>
-                                    <li><a href="#">Mèo</a></li>
-                                    <li><a href="#">Chim</a></li>
-                                    <li><a href="#">Hamster</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Pages</a>
-                                <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
-                        </ul>
-                    </nav>
+            </div> <!-- Main Navigation -->
+            <nav class="main_nav">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="main_nav_content d-flex flex-row">
+                                <!-- Categories Menu -->
+                                <!-- Main Nav Menu -->
+                                <div class="main_nav_menu">
+                                    <ul class="standard_dropdown main_nav_dropdown">
+                                        <li><a href="#">Home<i class="fas fa-chevron-down"></i></a></li>
+                                        <li class="hassubs"> <a href="#">Laptop<i class="fas fa-chevron-down"></i></a>
+                                            <ul>
+                                                <li> <a href="#">Lenovo<i class="fas fa-chevron-down"></i></a>
+                                                    <ul>
+                                                        <li><a href="#">Lenovo 1<i class="fas fa-chevron-down"></i></a></li>
+                                                        <li><a href="#">Lenovo 3<i class="fas fa-chevron-down"></i></a></li>
+                                                        <li><a href="#">Lenovo 2<i class="fas fa-chevron-down"></i></a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">DELL<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="#">APPLE<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="#">HP<i class="fas fa-chevron-down"></i></a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="hassubs"> <a href="#">Featured Brands<i class="fas fa-chevron-down"></i></a>
+                                            <ul>
+                                                <li> <a href="#">APPLE<i class="fas fa-chevron-down"></i></a>
+                                                    <ul>
+                                                        <li><a href="#">Laptop<i class="fas fa-chevron-down"></i></a></li>
+                                                        <li><a href="#">Mobiles<i class="fas fa-chevron-down"></i></a></li>
+                                                        <li><a href="#">Ipads<i class="fas fa-chevron-down"></i></a></li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">Samsung<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="#">Lenovo<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="#">DELL<i class="fas fa-chevron-down"></i></a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="hassubs"> <a href="#">Pages<i class="fas fa-chevron-down"></i></a>
+                                            <ul>
+                                                <li><a href="shop.html">Shop<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="product.html">Product<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="blog_single.html">Blog Post<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="regular.html">Regular Post<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="cart.html">Cart<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
+                                        <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+                                    </ul>
+                                </div> <!-- Menu Trigger -->
+                                <div class="menu_trigger_container ml-auto">
+                                    <div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
+                                        <div class="menu_burger">
+                                            <div class="menu_trigger_text">menu</div>
+                                            <div class="cat_burger menu_burger_inner"><span></span><span></span><span></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+            </nav> <!-- Menu -->
+            <div class="page_menu">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="page_menu_content">
+                                <div class="page_menu_search">
+                                    <form action="#"> <input type="search" required="required" class="page_menu_search_input" placeholder="Search for products..."> </form>
+                                </div>
+                                <ul class="page_menu_nav">
+                                    <li class="page_menu_item has-children"> <a href="#">Language<i class="fa fa-angle-down"></i></a>
+                                        <ul class="page_menu_selection">
+                                            <li><a href="#">English<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Italian<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Spanish<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Japanese<i class="fa fa-angle-down"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="page_menu_item has-children"> <a href="#">Currency<i class="fa fa-angle-down"></i></a>
+                                        <ul class="page_menu_selection">
+                                            <li><a href="#">US Dollar<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">EUR Euro<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">GBP British Pound<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">JPY Japanese Yen<i class="fa fa-angle-down"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="page_menu_item"> <a href="#">Home<i class="fa fa-angle-down"></i></a> </li>
+                                    <li class="page_menu_item has-children"> <a href="#">Super Deals<i class="fa fa-angle-down"></i></a>
+                                        <ul class="page_menu_selection">
+                                            <li><a href="#">Super Deals<i class="fa fa-angle-down"></i></a></li>
+                                            <li class="page_menu_item has-children"> <a href="#">Menu Item<i class="fa fa-angle-down"></i></a>
+                                                <ul class="page_menu_selection">
+                                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                                    <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="page_menu_item has-children"> <a href="#">Featured Brands<i class="fa fa-angle-down"></i></a>
+                                        <ul class="page_menu_selection">
+                                            <li><a href="#">Featured Brands<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="page_menu_item has-children"> <a href="#">Trending Styles<i class="fa fa-angle-down"></i></a>
+                                        <ul class="page_menu_selection">
+                                            <li><a href="#">Trending Styles<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                            <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="page_menu_item"><a href="blog.html">blog<i class="fa fa-angle-down"></i></a></li>
+                                    <li class="page_menu_item"><a href="contact.html">contact<i class="fa fa-angle-down"></i></a></li>
+                                </ul>
+                                <div class="menu_contact">
+                                    <div class="menu_contact_item">
+                                        <div class="menu_contact_icon"><img src="images/phone_white.png" alt=""></div>+38 068 005 3570
+                                    </div>
+                                    <div class="menu_contact_item">
+                                        <div class="menu_contact_icon"><img src="images/mail_white.png" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
-        </div>
-    </header>
-    <!-- Header Section End -->
+        </header>
+
+
+
+
+        <!-- <div style="height: 700px"> </div> -->
+    </div>
 
     <!-- Hero Section Begin -->
-    <section class="hero">
+    <!-- <section class="hero">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All Categories</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Chuồng cho thú cưng</a></li>
-                            <li><a href="#">Đồ chơi cho thú cưng</a></li>
-                            <li><a href="#">Phụ kiện cho thú cưng</a></li>
-                            <li><a href="#">Thức ăn cho thú cưng</a></li>
-                            <li><a href="#">Thuốc cho thú cưng</a></li>
-                            <li><a href="#">Thời trang cho thú cưng</a></li>
-                            <li><a href="#">Dịch vụ khác...</a></li>
-                            <!--<li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>-->
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="Bạn cần tìm gì???">
-                                <button type="submit" class="site-btn">TÌM</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+84 13.931.040</h5>
-                                <span>Hỗ trợ 24/7</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-lg-12">
                     <div class="hero__item set-bg">
                           <div class="owl-carousel owl-1">
 					        <div><img src="assetsWEB/slider/images/hero_1.jpg" alt="Image" class="img-fluid"></div>
 					        <div><img src="assetsWEB/slider/images/hero_2.jpg" alt="Image" class="img-fluid"></div>
 					        <div><img src="assetsWEB/slider/images/hero_3.jpg" alt="Image" class="img-fluid"></div>
 					      </div>
-                        <!--<div class="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" class="primary-btn">SHOP NOW</a>
-                        </div>-->
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- Hero Section End -->
+    <div class="container hero">
+        <div class="owl-carousel owl-1">
+            <div><img src="assetsWEB/slider/images/hero_1.jpg" alt="Image" class="img-fluid"></div>
+            <div><img src="assetsWEB/slider/images/hero_2.jpg" alt="Image" class="img-fluid"></div>
+            <div><img src="assetsWEB/slider/images/hero_3.jpg" alt="Image" class="img-fluid"></div>
+          </div>
+    </div>
 
     <!-- Categories Section Begin -->
     <section class="categories">
@@ -685,6 +795,10 @@
     <script src="assetsWEB/slider/js/bootstrap.min.js"></script>
     <script src="assetsWEB/slider/js/owl.carousel.min.js"></script>
     <script src="assetsWEB/slider/js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="assetsWEB/js/New_header.js"></script>
+
     
 
 
