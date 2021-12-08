@@ -8,6 +8,14 @@ pageEncoding="UTF-8"%>
     <jsp:include page="SUB_head.jsp" />
     <title>List Products</title>
 
+    <!-- <script type="text/javascript">
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var idsp = button.data('catid')
+            $('#exampleModal #idsp').val(idsp);
+        })
+    </script> -->
+
     <!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css"> -->
 </head>
 
@@ -46,7 +54,8 @@ pageEncoding="UTF-8"%>
                                 <div class="col-md-12">
                                     <input class="form-control" id="myInput" type="text" placeholder="Search..">
                                     <br>
-                                    <form method="post"action="${pageContext.request.contextPath }/adminListProduct?type=delete">
+                                    <form id="the-form" method="post"
+                                        action="${pageContext.request.contextPath }/adminListProduct?type=delete">
                                         <div class="dt-buttons btn-overlap btn-group">
                                             <div class="p-2">
                                                 <a flag="info" href="admin-Inser-Pros?type=insert"
@@ -58,22 +67,22 @@ pageEncoding="UTF-8"%>
                                                 </a>
                                             </div>
                                             <div class="p-2">
-                                                <button id="btndelete" type="submit" value="submit"
-                                                    class="dt-button buttons-htm15 btn btn-white btn-primary1 btn-bold"
-                                                    data-toggle="tooltip" title="Xóa Sản Phẩm">
+                                                <button id="btndelete" type="button"
+                                                    class="dt-button buttons-htm15 btn btn-white btn-primary1 btn-bold">
                                                     <span>
-                                                        <i class="fa fa-trash-o bigger-110 pink"></i>
+                                                        <i class="fa fa-trash-o bigger-110 pink" data-toggle="tooltip"
+                                                            title="Xóa Sản Phẩm"></i>
                                                     </span>
                                                 </button>
                                             </div>
                                         </div>
                                         <br>
                                         <div class"custom-width-star"><i data-star="4.5"></i></div>
-                                            <br>
+                                        <br>
                                         <table class="table table-image">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col"><input type="checkbox" id= "checkBoxAll" /></th>
+                                                    <th scope="col"><input type="checkbox" id="checkBoxAll" /></th>
                                                     <th scope="col">Mã Sản Phẩm</th>
                                                     <th scope="col">Hình Ảnh</th>
                                                     <th scope="col">Tên SP</th>
@@ -89,7 +98,9 @@ pageEncoding="UTF-8"%>
                                             <tbody id="myTable">
                                                 <c:forEach items="${proList}" var="us">
                                                     <tr>
-                                                        <td><input type="checkbox" class="chkCheckBoxId" class="custom-control-input" name="productID"value="${us.productID}"></td>
+                                                        <td><input type="checkbox" class="chkCheckBoxId"
+                                                                class="custom-control-input" name="productID"
+                                                                value="${us.productID}"></td>
                                                         <td>${us.productID}</td>
                                                         <td class="w-251">
                                                             <div><img src="data:image/jpeg;base64,${us.base64Image}"
@@ -106,11 +117,16 @@ pageEncoding="UTF-8"%>
                                                                 <c:param name="type" value="edit" />
                                                                 <c:param name="id" value="${us.productID}" />
                                                             </c:url>
-                                                            <a class="btn btn-primary1 btn-edit"
-                                                                data-toggle="tooltip" title="Edit" href=${editURL}><i
+                                                            <a class="btn btn-primary1 btn-edit" data-toggle="tooltip"
+                                                                title="Edit" href=${editURL}><i
                                                                     class="fa fa-pencil-square-o"
                                                                     style=" margin-right: 0;" aria-hidden="true"></i>
                                                             </a>
+                                                            <button type="button" class="btn btn-primary"
+                                                                data-catid="${us.productID}" data-toggle="modal"
+                                                                data-target="#exampleModal">
+                                                                Launch demo modal
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -138,6 +154,53 @@ pageEncoding="UTF-8"%>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- <form method="post" action="${pageContext.request.contextPath }/adminListProduct?type=delete"> -->
+                <div class="modal-body">
+                    <div class="text-center">
+                        are u sua???
+                    </div>
+                    <input type="hidden" name="idsp" id="idsp" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="the-submit" type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông Báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Please enter all values in the fields.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <jsp:include page="SUB_footer.jsp" />
     <!-- <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script> -->
     <!-- <script src="assets1/star/star.js"></script> -->
@@ -153,14 +216,49 @@ pageEncoding="UTF-8"%>
     </script>
 
     <script type="text/javascript">
-    $(document).ready (function () {
-        $('#checkBoxAll').click (function () {
-        if ($(this).is(":checked"))
-                $('.chkCheckBoxId').prop('checked', true);
-            else
-                $('.chkCheckBoxId').prop('checked', false);
+        $(document).ready(function () {
+            $('#checkBoxAll').click(function () {
+                if ($(this).is(":checked"))
+                    $('.chkCheckBoxId').prop('checked', true);
+                else
+                    $('.chkCheckBoxId').prop('checked', false);
+            });
         });
-    });
+    </script>
+
+    <script type="text/javascript">
+        //check checkbox when button in same row clicked
+        $('td .btn').on("click", function () {
+            $(this).closest('tr').find('.chkCheckBoxId').prop("checked", true);
+        })
+
+        //submit form outside modal
+        $(function () {
+            $('#the-submit').on('click', function (e) {
+                $('#the-form').submit();
+            });
+        });
+
+        // auto show modal when page load
+        // $(window).on('load', function () {
+        //     $('#exampleModal').modal('show');
+        // });
+
+        //check null value of parameter
+        $('#btndelete').click(function () {
+            // var test1 = $('#productID').val();
+            var i = 0;
+            var arr = [];
+            $('.chkCheckBoxId:checked').each(function () {
+                arr[i++] = $(this).val();
+            });
+
+            if (arr.length === 0) {
+                $('#myModal').modal('show');
+            } else {
+                $('#the-form').submit();
+            }
+        });
     </script>
 
 
