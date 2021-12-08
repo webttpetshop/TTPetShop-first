@@ -8,19 +8,12 @@ pageEncoding="UTF-8"%>
     <jsp:include page="SUB_head.jsp" />
     <title>List Products</title>
 
-    <!-- <script type="text/javascript">
-        $('#exampleModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget)
-            var idsp = button.data('catid')
-            $('#exampleModal #idsp').val(idsp);
-        })
-    </script> -->
-
     <!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css"> -->
 </head>
 
 <body>
     <jsp:include page="SUB_header.jsp" />
+    <!-- <input type="hidden" id="showModal" name="showModal" value="${showModal}"> show modal by attribute-->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
             <div class="pcoded-content">
@@ -259,6 +252,38 @@ pageEncoding="UTF-8"%>
                 $('#the-form').submit();
             }
         });
+
+
+        // Show modal by get parameter
+
+        // function getParameterByName(name, url) {
+        //     if (!url) url = window.location.href;
+        //     name = name.replace(/[\[\]]/g, "\\$&");
+        //     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        //         results = regex.exec(url);
+        //     if (!results) return null;
+        //     if (!results[2]) return '';
+        //     return decodeURIComponent(results[2].replace(/\+/g, " "));
+        // }
+        // $(window).on('load', function () {
+        //     if(getParameterByName('foo') == null)
+        //     {
+        //         $('#exampleModal').modal('show');
+        //     }
+            
+        // });
+        
+
+        // show modal by get check value of input 
+        // $(window).on('load', function () {
+        //     var check = $( "#showModal" ).val();
+        //     if(check != "")
+        //     {
+        //         $('#exampleModal').modal('show');
+        //         //alert(check);
+        //     }
+        //     //alert(check);
+        // });
     </script>
 
 

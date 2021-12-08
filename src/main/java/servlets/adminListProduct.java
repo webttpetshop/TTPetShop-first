@@ -70,6 +70,7 @@ public class adminListProduct extends HttpServlet {
 		if((total % totalpage) !=0)
 			total++;
 		request.setAttribute("total",total );
+		//request.setAttribute("showModal", "showModal");
 		// Forward sang /WEB-INF/views/productListView.jsp
 		response.setContentType("text/html;charset-UTF-8");
 		
