@@ -3,12 +3,19 @@ package beans;
 public class Users {
 	public Users() {
 	}
-	private String userID;
-	public String getUserID() {
-		return userID;
+	private Cart cartID;
+	public Cart getCartID() {
+		return cartID;
 	}
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setCartID(Cart cartID) {
+		this.cartID = cartID;
+	}
+	private String username;
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;

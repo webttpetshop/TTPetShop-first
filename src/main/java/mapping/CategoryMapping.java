@@ -9,7 +9,7 @@ public class CategoryMapping {
 	{
 		try {
 			Categories ct = new Categories();
-			ct.setCategoryID(rs.getInt("categoryID"));
+			ct.setCategoryID(rs.getString("categoryID"));
 			ct.setNameCat(rs.getString("nameCat"));
 			return ct;
 			

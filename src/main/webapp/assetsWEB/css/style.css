@@ -991,7 +991,10 @@ ol {
     background: #7fad39;
     border-color: #7fad39;
 }
-
+.featured__item__pic__hover li:hover button {
+	background-color: transparent;
+    border: none;
+}
 .featured__item__pic__hover li:hover a i {
     color: #ffffff;
     transform: rotate(360deg);
@@ -1013,6 +1016,11 @@ ol {
     -ms-transition: all, 0.5s;
     -o-transition: all, 0.5s;
     transition: all, 0.5s;
+}
+
+.featured__item__pic__hover li button {
+	background-color: transparent;
+    border: none;
 }
 
 .featured__item__pic__hover li a i {
@@ -3590,4 +3598,20 @@ ol {
     }
 }
 
+.custom-p {
+	font-size: 16px;
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+.full-div-100px img {
+    width: 100%;
+}
+.full-div-100px{
+	max-width:100px;
+	display:flex;
+	justify-content: flex-start;
+    align-items: center;
+}
+.align-middle {
+    vertical-align: middle!important;
+}
 

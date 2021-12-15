@@ -9,7 +9,7 @@ public class UserMapping {
 	public static Users maUsers (ResultSet rs)
 	{
 		try {
-			String userID = rs.getString("userID");
+			String userID = rs.getString("username");
 		       String password = rs.getString("password");
 		       String fullname = rs.getString("fullname");
 		       String address = rs.getString("address");
@@ -19,7 +19,7 @@ public class UserMapping {
 		       int role =rs.getInt("role");
 		       
 		       Users us = new Users();
-		       us.setUserID(userID);
+		       us.setUsername(userID);
 		       us.setPassword(password);;
 		       us.setFullname(fullname);
 		       us.setAddress(address);

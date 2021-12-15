@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import beans.Categories;
+import beans.DetailCart;
 import mapping.CategoryMapping;
 
 public class CategoryUtils {
@@ -24,4 +25,5 @@ public class CategoryUtils {
 		   System.out.println("connect prodcut!");
 		   return list;
 	}
+	
 }

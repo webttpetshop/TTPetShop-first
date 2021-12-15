@@ -163,7 +163,7 @@ String dataPoints1 = gsonObj1.toJson(list1);
                                         <tbody id="myTable">
                                             <c:forEach items="${userList}" var="us">
                                                 <tr>
-                                                    <td>${us.userID}</td>
+                                                    <td>${us.username}</td>
                                                     <td>${us.email}</td>
                                                     <td>${us.password}</td>
                                                     <td>${us.fullname}</td>
@@ -173,7 +173,7 @@ String dataPoints1 = gsonObj1.toJson(list1);
                                                     <td>
                                                         <c:url var="editURL" value="/admin-new">
                                                             <c:param name="type" value="edit" />
-                                                            <c:param name="id" value="${us.userID}" />
+                                                            <c:param name="id" value="${us.username}" />
                                                         </c:url>
                                                         <a class="btn btn-sm btn-primary1 btn-edit" data-toggle="tooltip"
                                                             title="Edit" href='${editURL}'><i

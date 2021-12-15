@@ -6,7 +6,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import beans.Cart;
+import beans.Products;
 import beans.Users;
+import mapping.CartMapping;
+import mapping.ProductMapping;
 import mapping.UserMapping;
 
 public class DBUtils {
@@ -49,7 +54,7 @@ public class DBUtils {
 		   return list;
 	}
 	public static Users findUserByID(Connection conn, String username, String password) throws SQLException {
-		   String sql = "SELECT  distinct * FROM Users where userID= ? and password = ?";
+		   String sql = "SELECT  distinct * FROM Users where username= ? and password = ?";
 		   
 		   System.out.println("find user!");
 		   PreparedStatement pstm = conn.prepareStatement(sql);
@@ -61,9 +66,23 @@ public class DBUtils {
 		   if (rs.next()) {
 
 			   Users us = UserMapping.maUsers(rs);
+			   us.setCartID(getCartByUsername(conn, us.getUsername()));
 			   System.out.println("end find user and success");
 		       return us;
 
+		   }
+		   return null;
+	}
+
+	private static Cart getCartByUsername(Connection conn, String username) throws SQLException {
+		String sql = "SELECT * FROM dbo.Cart WHERE username=?";
+		   PreparedStatement pstm = conn.prepareStatement(sql);
+		   pstm.setString(1, username);
+		   ResultSet rs = pstm.executeQuery();
+		   //List<DetailCart> list = new ArrayList<DetailCart>();
+		   if (rs.next()) {
+			   Cart  ct = CartMapping.maCart(rs);
+			   return ct;
 		   }
 		   return null;
 	}

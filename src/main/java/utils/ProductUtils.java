@@ -48,8 +48,8 @@ public class ProductUtils {
 		   return null;
 	}
 
-	public static void InsertPro(Connection conn, int productID, String name, String description, Double price,
-			int quantity, int categoryID, int viewed, InputStream file) {
+	public static void InsertPro(Connection conn, int productID, String name, String description, int price,
+			int quantity, String categoryID, int viewed, InputStream file) {
 		// TODO Auto-generated method stub
 		String sql="";
 		try {
@@ -64,33 +64,36 @@ public class ProductUtils {
 				   //pstm.setInt(1, productID);
 				   pstm.setString(1, name);
 				   pstm.setString(4, description);
-				   pstm.setDouble(2, price);
+				   pstm.setInt(2, price);
 				   pstm.setInt(6, quantity);
-				   pstm.setInt(3, categoryID);
+				   //pstm.setString(3, categoryID);
+				   pstm.setString(3, categoryID);
 				   pstm.setInt(7, viewed);
 		       		if (file != null) {
 		               // fetches input stream of the upload file for the blob column
 		       			pstm.setBinaryStream(5, file);
 		           }
-		       		pstm.executeQuery();
+		       		pstm.executeUpdate();
 		       		System.out.println("inserted pro - InsertPro - ProUtil");
 			}
 			else {
-				sql = "EXEC updatePro @id=?, @name=?, @price=?, @categoryID=?, @description=?, @pic=?, @quantity=?, @viewed=?";
+
+	       		System.out.println("update pro - InsertPro - ProUtil");
+				sql = "EXEC dbo.updatePro @id=?, @name=?, @price=?, @categoryID=?, @description=?, @pic=?, @quantity=?, @viewed=?";
 				PreparedStatement pstm1 = conn.prepareStatement(sql);
 				   pstm1.setInt(1, productID);
 				   pstm1.setString(2, name);
 				   pstm1.setString(5, description);
-				   pstm1.setDouble(3, price);
+				   pstm1.setInt(3, price);
 				   pstm1.setInt(7, quantity);
-				   pstm1.setInt(4, categoryID);
+				   //pstm1.setInt(4, categoryID);
+				   pstm1.setString(4, categoryID);
 				   pstm1.setInt(8, viewed);
 		       		if (file != null) {
 		               // fetches input stream of the upload file for the blob column
 		       			pstm1.setBinaryStream(6, file);
 		           }
-		       		pstm1.executeQuery();
-		       		System.out.println("update pro - InsertPro - ProUtil");
+		       		pstm1.executeUpdate();
 			}
 		} catch (SQLException e) {
 	        // process sql exception

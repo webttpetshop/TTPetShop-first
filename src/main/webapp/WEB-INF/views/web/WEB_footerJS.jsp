@@ -76,6 +76,8 @@
     <!-- Footer Section End -->
     <!-- Js Plugins -->
     <!-- Js Plugins -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
     <script src="assetsWEB/js/jquery-3.3.1.min.js"></script>
     <script src="assetsWEB/js/bootstrap.min.js"></script>
     <script src="assetsWEB/js/jquery.nice-select.min.js"></script>
@@ -91,5 +93,23 @@
     <script src="assetsWEB/slider/js/popper.min.js"></script>
     <script src="assetsWEB/slider/js/bootstrap.min.js"></script>
     <script src="assetsWEB/slider/js/owl.carousel.min.js"></script>
-    <script src="assetsWEB/slider/js/main.js"></script>
+    <script src="assetsWEB/slider/js/main.js"></script>   
+     
+
+        <script>
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                if ($(this).scrollTop()) {
+                    $('.backtop, .backtop_text').fadeIn();
+                } else {
+                    $('.backtop, .backtop_text').fadeOut();
+                }
+            });
+            $('.backtop').click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 1000);
+            });
+        });
+    </script>
     

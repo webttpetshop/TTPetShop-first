@@ -100,11 +100,12 @@ public class admin_Insert_Pros extends HttpServlet {
 		int productID=Integer.parseInt(request.getParameter("productID"));
 		String name = new String(request.getParameter("name").getBytes("ISO-8859-1"), "UTF-8");
 		String description = new String(request.getParameter("description").getBytes("ISO-8859-1"), "UTF-8");
-		Double price= Double.parseDouble(request.getParameter("price")) ;
+		int price= Integer.parseInt(request.getParameter("price")) ;
 		int quantity = Integer.parseInt(request.getParameter("quantity"));
-		int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+		//int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+		String categoryID = request.getParameter("categoryID");
 		int viewed = Integer.parseInt(request.getParameter("viewed"));
-
+		System.out.println(price);
 		InputStream inputStream = null; // input stream of the upload file
 		String message = null;
 		// obtains the upload file part in this multipart request

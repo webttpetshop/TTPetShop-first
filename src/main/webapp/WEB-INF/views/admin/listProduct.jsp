@@ -347,7 +347,7 @@ pageEncoding="UTF-8"%>
         // });
         
 
-        // show modal by get check value of input 
+        // show modal by check value of input 
         // $(window).on('load', function () {
         //     var check = $( "#showModal" ).val();
         //     if(check != "")
