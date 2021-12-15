@@ -109,36 +109,56 @@ CREATE TABLE Cart (
 	total int DEFAULT 0
 )
 GO
+	--FOREIGN KEY(cartID) REFERENCES Cart(cartID),
 CREATE TABLE DetailCart (
-	cartID integer NOT NULL,
+	userID VARCHAR(20) NOT NULL REFERENCES Users(userID),
 	productID integer NOT NULL,
 	quantity integer NOT NULL DEFAULT 1,
-	FOREIGN KEY(cartID) REFERENCES Cart(cartID),
-	FOREIGN KEY(productID) REFERENCES dbo.Products(productID)
+	FOREIGN KEY(productID) REFERENCES dbo.Products(productID),
+	status INT DEFAULT 0
 
 )
 GO
+CREATE PROC us_addtoDetailCart @proID INT, @amount INT, @userID VARCHAR(20)
+AS
+BEGIN
+	DECLARE @isExistPro INT
+	SELECT @isExistPro = productID
+	FROM dbo.DetailCart WHERE productID=@proID AND userID=@userID
+	IF (@isExistPro != null)
+		UPDATE dbo.DetailCart SET quantity=quantity+@amount WHERE productID=@proID AND userID=@userID
+	ELSE
+	INSERT dbo.DetailCart
+	(userID,productID,quantity)
+	VALUES
+	(   @userID,
+		@proID, -- productID - int
+	    @amount  -- quantity - int
+	    )
+
+END
+go
 CREATE TRIGGER us_afterEditCartDetail ON dbo.DetailCart AFTER INSERT,UPDATE
 AS
 BEGIN
     DECLARE @total INT
-	DECLARE @CartID int
-	SELECT CartID=i.cartID FROM Inserted AS i
-	SELECT @total=SUM(total)
-	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE cartID=@CartID AND dtC.productID = pr.productID) AS br
-	UPDATE dbo.Cart SET total=@total WHERE cartID=@CartID
+	DECLARE @userID int
+	SELECT @userID=i.userID FROM Inserted AS i
+	SELECT @total=ISNULL(SUM(total), 0) 
+	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE userID=@userID AND dtC.productID = pr.productID AND status=1) AS br
+	UPDATE dbo.Cart SET total=@total WHERE userID=@userID
 
 END
 GO
 CREATE TRIGGER us_afterDelCartDetail ON dbo.DetailCart FOR DELETE
 AS 
 BEGIN
-	DECLARE @total INT
-	DECLARE @CartID int
-	SELECT CartID=i.cartID FROM Deleted AS i
+    DECLARE @total INT
+	DECLARE @userID int
+	SELECT @userID=i.userID FROM Deleted AS i
 	SELECT @total=ISNULL(SUM(total), 0) 
-	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE cartID=@CartID AND dtC.productID = pr.productID) AS br
-	UPDATE dbo.Cart SET total=@total WHERE cartID=@CartID
+	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE userID=@userID AND dtC.productID = pr.productID AND status=1) AS br
+	UPDATE dbo.Cart SET total=@total WHERE userID=@userID
 
 END
 GO
@@ -240,14 +260,14 @@ GO
 CREATE TABLE review (
 	id INT PRIMARY KEY IDENTITY,
 	productID INT REFERENCES dbo.Products(productID),
-	userID varchar(20) REFERENCES dbo.Users(userID),
+	userID VARCHAR(20) REFERENCES dbo.Users(userID),
 	rating FLOAT DEFAULT 0,
 	review TEXT,
 )
-go
+GO
 ------------------------------------------------------
 ALTER TABLE Products WITH CHECK ADD CONSTRAINT Products_fk0 FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
-go
+GO
 
 -----------------------------------------------------------store proc--------------------------------------------------------
 
