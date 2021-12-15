@@ -62,7 +62,7 @@ public class admin_Insert_Pros extends HttpServlet {
 				int id = Integer.parseInt(request.getParameter("id"));
 				Products pd;
 				pd = ProductUtils.getProByID(conn, id);
-				System.out.println(pd.getProductID());
+				System.out.println(pd.getPrice());
 				request.setAttribute("product", pd);
 			}
 			else
@@ -120,7 +120,7 @@ public class admin_Insert_Pros extends HttpServlet {
 		}
 		System.out.println(request.getParameter("rating"));
 		ProductUtils.InsertPro(conn, productID, name,description, price,quantity,categoryID,viewed,inputStream);
-		response.sendRedirect (request.getContextPath()+"/adminListProduct");
+		response.sendRedirect (request.getContextPath()+"/admin-ListProduct");
 		
 		
 		

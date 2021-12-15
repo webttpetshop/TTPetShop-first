@@ -3,7 +3,7 @@ package beans;
 public class Products {
 	private int productID ;
 	private String name ;
-	private float price ;
+	private int price ;
 	private int categoryID ;
 	private String description ;
 	private int quantity ;
@@ -33,10 +33,10 @@ public class Products {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public float getPrice() {
+	public int getPrice() {
 		return price;
 	}
-	public void setPrice(float price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 	public int getCategoryID() {

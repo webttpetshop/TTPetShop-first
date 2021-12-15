@@ -21,14 +21,14 @@ import utils.DBUtils;
  * 
  * tam thời ko sử dụng cái này nha hihi
  */
-@WebServlet("/admin-list-user")
-public class adminController extends HttpServlet {
+@WebServlet("/admin-home")
+public class admin_Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public adminController() {
+    public admin_Controller() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +46,8 @@ public class adminController extends HttpServlet {
 		 }
 
 		List<Users> list = null;
-		int totalpage = 10;
+		List<Users> list1 = null;
+		int totalpage = 3;
 		try {
 			String spageid= request.getParameter ("page") ; //tìm ra id của phần tử đầu tiên của trang
 			if (spageid== null)
@@ -60,22 +61,21 @@ public class adminController extends HttpServlet {
 			}*/
 		   list = DBUtils.getRcord(conn, pageid, totalpage);
 		   System.out.println("connect listUsersByPage successfully!");
-		   //list1 = DBUtils.listUser(conn);
+		   list1 = DBUtils.listUser(conn);
 		 } catch (SQLException e) {
 		    e.printStackTrace();
 		 }
 
 		request.setAttribute("userList", list);
-		int total = list.size()/totalpage;  // tổng số trang
+		int total = list1.size()/totalpage;  // tổng số trang
 		System.out.println(list.size());
-		if((total % totalpage) !=0)
+		if((list1.size() % totalpage) !=0)
 			total++;
 		request.setAttribute("total",total );
 		// Forward sang /WEB-INF/views/productListView.jsp
 		response.setContentType("text/html;charset-UTF-8");
-
 		RequestDispatcher dispatcher = request.getServletContext()
-				.getRequestDispatcher("/WEB-INF/views/admin/NewFile1.jsp");
+				.getRequestDispatcher("/WEB-INF/views/admin/admin-home.jsp");
 		dispatcher.forward(request, response);
 		//response.sendRedirect (request.getContextPath()+"/adminListUserByPage?page=1");
 	}

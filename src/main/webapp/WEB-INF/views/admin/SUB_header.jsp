@@ -29,7 +29,7 @@
 					<li class="nav-item pcoded-hasmenu">
 						<a href="#!" class="nav-link"><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Componant</span></a>
 						<ul class="pcoded-submenu">
-							<li class=""><a href="adminListProduct" class="">Danh Sách Products</a></li>
+							<li class=""><a href="admin-ListProduct" class="">Danh Sách Products</a></li>
 							<li class=""><a href="bc_badges.html" class="">Badges</a></li>
 							<li class=""><a href="bc_breadcrumb-pagination.html" class="">Breadcrumb & paggination</a></li>
 							<li class=""><a href="bc_collapse.html" class="">Collapse</a></li>
@@ -217,3 +217,4 @@
 			</ul>
 		</div>
 	</header>
+	<!-- [ Header ] end -->

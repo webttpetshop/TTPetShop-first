@@ -13,7 +13,7 @@ public class ProductMapping {
 			Products pd = new Products();
 			pd.setProductID(rs.getInt("productID"));
 			pd.setName(rs.getString("name"));
-			pd.setPrice(rs.getFloat("price"));
+			pd.setPrice(rs.getInt("price"));
 			pd.setCategoryID(rs.getInt("categoryID"));
 			pd.setDescription(rs.getString("description"));
 			pd.setQuantity(rs.getInt("quantity"));

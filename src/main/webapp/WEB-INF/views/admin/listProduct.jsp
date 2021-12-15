@@ -42,33 +42,35 @@ pageEncoding="UTF-8"%>
                             <div class="row">
                                 
                             </div> -->
-
+                            <div class="row">
+                                <input class="form-control" style=" width: 85%; " id="myInput" type="text" placeholder="Search..">
+                                <div class="dt-buttons btn-overlap btn-group">
+                                    <div class="p-2">
+                                        <a flag="info" href="admin-Inser-Pros?type=insert"
+                                            class="dt-button buttons-colvis btn btn-white btn-primary1 btn-bold"
+                                            data-toggle="tooltip" title='Thêm Sản Phẩm'>
+                                            <span>
+                                                <i class="fa fa-plus-circle bigger-110 purple"></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="p-2">
+                                        <button id="btndelete" type="button"
+                                            class="dt-button buttons-htm15 btn btn-white btn-primary1 btn-bold">
+                                            <span>
+                                                <i class="fa fa-trash-o bigger-110 pink" data-toggle="tooltip"
+                                                    title="Xóa Sản Phẩm"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input class="form-control" id="myInput" type="text" placeholder="Search..">
-                                    <br>
+                                    <!-- <br> -->
                                     <form id="the-form" method="post"
-                                        action="${pageContext.request.contextPath }/adminListProduct?type=delete">
-                                        <div class="dt-buttons btn-overlap btn-group">
-                                            <div class="p-2">
-                                                <a flag="info" href="admin-Inser-Pros?type=insert"
-                                                    class="dt-button buttons-colvis btn btn-white btn-primary1 btn-bold"
-                                                    data-toggle="tooltip" title='Thêm Sản Phẩm'>
-                                                    <span>
-                                                        <i class="fa fa-plus-circle bigger-110 purple"></i>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="p-2">
-                                                <button id="btndelete" type="button"
-                                                    class="dt-button buttons-htm15 btn btn-white btn-primary1 btn-bold">
-                                                    <span>
-                                                        <i class="fa fa-trash-o bigger-110 pink" data-toggle="tooltip"
-                                                            title="Xóa Sản Phẩm"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                        </div>
+                                        action="${pageContext.request.contextPath }/admin-ListProduct?type=delete">
+                                        
                                         <br>
                                         <div class"custom-width-star"><i data-star="4.5"></i></div>
                                         <br>
@@ -91,21 +93,21 @@ pageEncoding="UTF-8"%>
                                             <tbody id="myTable">
                                                 <c:forEach items="${proList}" var="us">
                                                     <tr>
-                                                        <td><input type="checkbox" class="chkCheckBoxId"
+                                                        <td class="align-middle"><input type="checkbox" class="chkCheckBoxId"
                                                                 class="custom-control-input" name="productID"
                                                                 value="${us.productID}"></td>
-                                                        <td>${us.productID}</td>
-                                                        <td class="w-251">
-                                                            <div><img src="data:image/jpeg;base64,${us.base64Image}"
+                                                        <td class="align-middle">${us.productID}</td>
+                                                        <td class="w-251 align-middle"">
+                                                            <div class="full-div"><img src="data:image/jpeg;base64,${us.base64Image}"
                                                                     alt="${us.name}" title="${us.name}" /></div>
                                                         </td>
-                                                        <td>${us.name}</td>
-                                                        <td>${us.price} &#8363</td>
-                                                        <td>${us.categoryID}</td>
-                                                        <td>${us.description}</td>
-                                                        <td>${us.quantity}</td>
-                                                        <td>${us.viewed}</td>
-                                                        <td>
+                                                        <td class="align-middle">${us.name}</td>
+                                                        <td class="align-middle">${us.price} &#8363</td>
+                                                        <td class="align-middle">${us.categoryID}</td>
+                                                        <td class="align-middle">${us.description}</td>
+                                                        <td class="align-middle">${us.quantity}</td>
+                                                        <td class="align-middle">${us.viewed}</td>
+                                                        <td class="align-middle">
                                                             <c:url var="editURL" value="/admin-Inser-Pros">
                                                                 <c:param name="type" value="edit" />
                                                                 <c:param name="id" value="${us.productID}" />
@@ -129,12 +131,83 @@ pageEncoding="UTF-8"%>
                                     <nav aria-label="Page navigation example">
                                         <ul class="pagination justify-content-center">
                                             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                            <!-- <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                      <li class="page-item"><a class="page-link" href="#">3</a></li> -->
                                             <c:forEach begin="1" end="${total}" var="i">
                                                 <li class="page-item"><a class="page-link"
-                                                        href="adminListUserByPage?page=${i}">${i}</a></li>
+                                                        href="admin-ListProduct?page=${i}">${i}</a></li>
+                                            </c:forEach>
+                                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <br> -->
+                                    <form id="the-form" method="post"
+                                        action="${pageContext.request.contextPath }/admin-ListProduct?type=delete">
+                                        
+                                        <br>
+                                        <div class"custom-width-star"><i data-star="4.5"></i></div>
+                                        <br>
+                                        <table class="table table-image">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"><input type="checkbox" id="checkBoxAll" /></th>
+                                                    <th scope="col">Mã Sản Phẩm</th>
+                                                    <th scope="col">Hình Ảnh</th>
+                                                    <th scope="col">Tên SP</th>
+                                                    <th scope="col">Giá</th>
+                                                    <th scope="col">Mã Loại SP</th>
+                                                    <th scope="col">Mô Tả</th>
+                                                    <th scope="col">Số Lượng</th>
+                                                    <th scope="col">Views</th>
+                                                    <th scope="col">Actions</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody id="myTable">
+                                                <c:forEach items="${proList}" var="us">
+                                                    <tr>
+                                                        <td class="align-middle"><input type="checkbox" class="chkCheckBoxId"
+                                                                class="custom-control-input" name="productID"
+                                                                value="${us.productID}"></td>
+                                                        <td class="align-middle">${us.productID}</td>
+                                                        <td class="w-251 align-middle"">
+                                                            <div style="background-image:url("data:image/png;base64,${us.base64Image}");"></div>
+                                                        </td>
+                                                        <td class="align-middle">${us.name}</td>
+                                                        <td class="align-middle">${us.price} &#8363</td>
+                                                        <td class="align-middle">${us.categoryID}</td>
+                                                        <td class="align-middle">${us.description}</td>
+                                                        <td class="align-middle">${us.quantity}</td>
+                                                        <td class="align-middle">${us.viewed}</td>
+                                                        <td class="align-middle">
+                                                            <c:url var="editURL" value="/admin-Inser-Pros">
+                                                                <c:param name="type" value="edit" />
+                                                                <c:param name="id" value="${us.productID}" />
+                                                            </c:url>
+                                                            <a class="btn btn-primary1 btn-edit" data-toggle="tooltip"
+                                                                title="Edit" href=${editURL}><i
+                                                                    class="fa fa-pencil-square-o"
+                                                                    style=" margin-right: 0;" aria-hidden="true"></i>
+                                                            </a>
+                                                            <button type="button" class="btn btn-primary"
+                                                                data-catid="${us.productID}" data-toggle="modal"
+                                                                data-target="#exampleModal">
+                                                                Launch demo modal
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                            <c:forEach begin="1" end="${total}" var="i">
+                                                <li class="page-item"><a class="page-link"
+                                                        href="admin-ListProduct?page=${i}">${i}</a></li>
                                             </c:forEach>
                                             <li class="page-item"><a class="page-link" href="#">Next</a></li>
                                         </ul>
@@ -221,7 +294,7 @@ pageEncoding="UTF-8"%>
 
     <script type="text/javascript">
         //check checkbox when button in same row clicked
-        $('td .btn').on("click", function () {
+        $('td .btn-primary').on("click", function () {
             $(this).closest('tr').find('.chkCheckBoxId').prop("checked", true);
         })
 

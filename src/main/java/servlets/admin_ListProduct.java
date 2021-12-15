@@ -19,14 +19,14 @@ import utils.*;
 /**
  * Servlet implementation class adminListProduct
  */
-@WebServlet("/adminListProduct")
-public class adminListProduct extends HttpServlet {
+@WebServlet("/admin-ListProduct")
+public class admin_ListProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public adminListProduct() {
+    public admin_ListProduct() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,30 +45,26 @@ public class adminListProduct extends HttpServlet {
 
 		List<Products> list = null;
 		List<Products> list1 = null;
-		int totalpage = 20;
+		int totalpage = 3;
 		try {
 			String spageid= request.getParameter ("page") ; //tìm ra id của phần tử đầu tiên của trang
 			if (spageid== null)
 					spageid="1";
 			int pageid= Integer.parseInt(spageid);
-			//int totalitem = 15; // số item trên 1 trang
-			/*if (pageid==1){}
-			else{
-			    pageid=pageid-1;
-			    pageid=pageid*totalitem +1;
-			}*/
 		   list = ProductUtils.getRcord(conn, pageid, totalpage);
 		   System.out.println("connect listProductPage successfully!");
-		   //list1 = ProductUtils.listPro(conn);
+		   list1 = ProductUtils.listPro(conn);
 		 } catch (SQLException e) {
 		    e.printStackTrace();
 		 }
 
 		request.setAttribute("proList", list);
-		int total = list.size()/totalpage;  // tổng số trang
-		System.out.println(list.size());
-		if((total % totalpage) !=0)
+		int total = list1.size()/totalpage;  // tổng số trang
+		System.out.println(list1.size());
+		System.out.println(total);
+		if((list1.size() % totalpage) !=0)
 			total++;
+		System.out.println(total);
 		request.setAttribute("total",total );
 		//request.setAttribute("showModal", "showModal");
 		// Forward sang /WEB-INF/views/productListView.jsp
@@ -98,7 +94,7 @@ public class adminListProduct extends HttpServlet {
 		{
 			ProductUtils.delProByID(conn, id);
 		}
-		response.sendRedirect (request.getContextPath()+"/adminListProduct");
+		response.sendRedirect (request.getContextPath()+"/admin-ListProduct");
 	}
 
 }

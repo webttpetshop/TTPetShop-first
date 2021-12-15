@@ -14,6 +14,7 @@ public class UserMapping {
 		       String fullname = rs.getString("fullname");
 		       String address = rs.getString("address");
 		       String phone = rs.getString("phone");
+		       String email=rs.getString("email");
 		       int coins =rs.getInt("coins");
 		       int role =rs.getInt("role");
 		       
@@ -23,6 +24,7 @@ public class UserMapping {
 		       us.setFullname(fullname);
 		       us.setAddress(address);
 		       us.setPhone(phone);
+		       us.setEmail(email);
 		       us.setCoins(coins);
 		       us.setRole(role);
 		       return us;

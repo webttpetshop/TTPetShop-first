@@ -13,9 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.Products;
 import beans.Users;
 import conn.DBConnection;
 import utils.DBUtils;
+import utils.ProductUtils;
 import utils.SessionUtils;
 
 /**
@@ -52,8 +54,20 @@ public class homeController extends HttpServlet {
 		    SessionUtils.getInstance().removeValue (request, "USERMODEL");
 		    response.sendRedirect(request.getContextPath() +"/home");
 		 } else {
+			 List<Products> list = null;
+			 Connection conn = null;
+			 try {
+				 
+				 conn = DBConnection.getConnection();
+				 
+				 list = ProductUtils.listPro(conn);
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			 request.setAttribute("proList", list);
 		    //request.setAttribute("categories", categoryService.findAll ());
-			 RequestDispatcher rd=  request.getRequestDispatcher ("/WEB-INF/views/web/NewFile.jsp"); 
+			 RequestDispatcher rd=  request.getRequestDispatcher ("/WEB-INF/views/web/TTPetShopHome.jsp"); 
 		   rd.forward (request, response);
 		 }
 	}
@@ -86,7 +100,7 @@ public class homeController extends HttpServlet {
 		            response.sendRedirect (request.getContextPath()+"/home");
 		       } else
 		            //response.sendRedirect (request.getContextPath()+"/adminListUserByPage?page=1");
-		    	   response.sendRedirect (request.getContextPath()+"/admin-list-user");
+		    	   response.sendRedirect (request.getContextPath()+"/admin-home");
 		   } else
 		        response.sendRedirect (request.getContextPath () +"/log-in?action=login&message=username_password_invalid&alert=danger");
 			}

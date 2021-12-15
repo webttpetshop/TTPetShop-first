@@ -114,7 +114,7 @@ public class ProductUtils {
 		
 	}
 	
-	/*public static List<Products> listPro(Connection conn) throws SQLException {
+	public static List<Products> listPro(Connection conn) throws SQLException {
 		   String sql = "SELECT * FROM Products";
 		   PreparedStatement pstm = conn.prepareStatement(sql);
 		   ResultSet rs = pstm.executeQuery();
@@ -126,5 +126,5 @@ public class ProductUtils {
 		   }
 		   System.out.println("connect prodcut!");
 		   return list;
-	}*/
+	}
 }
