@@ -1,0 +1,31 @@
+body {
+    margin-top: 20px;
+}
+
+.avatar {
+    width: 200px;
+    height: 200px;
+}
+
+.text-edit {
+    color: #7fad39;
+}
+
+.btn {
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #7fad39;
+}
+
+.btn:hover {
+    background-color: #7fad39;
+    filter: brightness(80%);
+}
