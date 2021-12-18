@@ -22,5 +22,6 @@
     <link rel="stylesheet" href="assetsWEB/slider/fonts/icomoon/style.css">
     <link rel="stylesheet" href="assetsWEB/slider/css/style.css">
     <link rel="stylesheet" href="assetsWEB/slider/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assetsWEB/css/styleProfile.css" type="text/css">
     
     

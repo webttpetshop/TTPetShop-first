@@ -15,7 +15,7 @@ public class SQLServerConnection {
 	        //Database name to access
 	        String dbName = "TTPetShop";
 	        String dbusername ="sa";
-	        String dbPassword ="141121";
+	        String dbPassword ="sa";
 	        String connectionURL = dbURL + ";databasename=" + dbName;//?
 	        Connection conn= null;
 	        try {
