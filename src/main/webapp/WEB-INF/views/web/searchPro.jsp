@@ -84,7 +84,7 @@
                         </div>
                         <div class="sidebar__item">
                             <h4>Lọc dữ liệu</h4>
-                            <button class="FilterPro" style=" width: 100%; ">Lọc</button>
+                            <button type="button" class="FilterPro" style=" width: 100%; ">Lọc</button>
                         </div>
                         <div class="sidebar__item">
                             <div class="latest-product__text">
