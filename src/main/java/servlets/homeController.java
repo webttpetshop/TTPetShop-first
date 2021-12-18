@@ -60,7 +60,20 @@ public class homeController extends HttpServlet {
 			 } else if (action != null && action.equals("logout")) {
 			    SessionUtils.getInstance().removeValue (request, "USERMODEL");
 			    response.sendRedirect(request.getContextPath() +"/home");
-			 } else {
+			 } else if(action != null && action.equals("search")) {
+				 String searchString = request.getParameter("searchString");
+				 if (searchString.isEmpty())
+				 {
+					 System.out.println("null search");
+					 response.sendRedirect(request.getContextPath() +"/home");
+				 }
+				 else {
+					 System.out.println(searchString);
+					 request.getSession().setAttribute("searchString", searchString); 
+					 response.sendRedirect(request.getContextPath() +"/User-Search");
+				}
+			}
+			 else {
 					 conn = DBConnection.getConnection();
 					 
 					 list = ProductUtils.listPro(conn); 

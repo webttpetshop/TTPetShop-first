@@ -49,14 +49,14 @@ public class ProductUtils {
 	}
 
 	public static void InsertPro(Connection conn, int productID, String name, String description, int price,
-			int quantity, String categoryID, int viewed, InputStream file) {
+			int quantity, String categoryID, int viewed, InputStream file, float rate) {
 		// TODO Auto-generated method stub
 		String sql="";
 		try {
 			if (productID==0)
 			{
-				sql = "INSERT INTO Products (name,price,categoryID,description,pic,quantity,viewed) "
-						+ "values (?, ?, ?, ?, ?, ?, ?)";
+				sql = "INSERT INTO Products (name,price,categoryID,description,pic,quantity,viewed,rate) "
+						+ "values (?, ?, ?, ?, ?, ?, ?, ?)";
 				System.out.println("insert");
 
 				System.out.println(sql);
@@ -73,13 +73,14 @@ public class ProductUtils {
 		               // fetches input stream of the upload file for the blob column
 		       			pstm.setBinaryStream(5, file);
 		           }
+		       		pstm.setFloat(8, rate);
 		       		pstm.executeUpdate();
 		       		System.out.println("inserted pro - InsertPro - ProUtil");
 			}
 			else {
 
 	       		System.out.println("update pro - InsertPro - ProUtil");
-				sql = "EXEC dbo.updatePro @id=?, @name=?, @price=?, @categoryID=?, @description=?, @pic=?, @quantity=?, @viewed=?";
+				sql = "EXEC dbo.updatePro @id=?, @name=?, @price=?, @categoryID=?, @description=?, @pic=?, @quantity=?, @viewed=?, @rate=?";
 				PreparedStatement pstm1 = conn.prepareStatement(sql);
 				   pstm1.setInt(1, productID);
 				   pstm1.setString(2, name);
@@ -93,6 +94,7 @@ public class ProductUtils {
 		               // fetches input stream of the upload file for the blob column
 		       			pstm1.setBinaryStream(6, file);
 		           }
+		       		pstm1.setFloat(9, rate);
 		       		pstm1.executeUpdate();
 			}
 		} catch (SQLException e) {
@@ -129,5 +131,48 @@ public class ProductUtils {
 		   }
 		   System.out.println("connect prodcut!");
 		   return list;
+	}
+
+	public static List<Products> searchPro(Connection conn, String searchString, String maxPrice, String minPrice, String rate) {
+		// TODO Auto-generated method stub
+		   
+		try {
+			String sql = "EXEC dbo.us_searchProFilter @proName = ?, @rate = ?, @min = ?, @max = ?";
+			   System.out.println("start Search");
+			   PreparedStatement pstm = conn.prepareStatement(sql);
+			   pstm.setString(1, searchString);
+			   if (maxPrice != null)
+				   pstm.setInt(4, Integer.parseInt(maxPrice));
+			   else {
+				   pstm.setInt(4,0);
+			   }
+			   if(minPrice != null)
+				   pstm.setInt(3, Integer.parseInt(minPrice));
+			   else {
+				   pstm.setInt(3,0);
+			   }
+			   if(rate != null)
+				   pstm.setFloat(2, Float.parseFloat(rate));
+			   else {
+				   pstm.setFloat(2,0);
+			}
+				   
+			   //System.out.println(pstm.toString());
+			   ResultSet rs = pstm.executeQuery();
+			   System.out.println("connected to product list to Search - ProUtils!");
+			   List<Products> list = new ArrayList<Products >();
+			   while (rs.next()) {
+				   Products  pd = ProductMapping.maProducts(rs);
+				   System.out.println(pd.getName());
+				   list.add(pd);
+			   }
+			   System.out.println("success Search");
+			   return list;
+		} catch (Exception e) {
+			// TODO: handle exception
+				e.printStackTrace();
+			   System.out.println("fail to Search");
+			   return null;
+		}
 	}
 }

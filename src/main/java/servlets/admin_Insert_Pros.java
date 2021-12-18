@@ -120,7 +120,7 @@ public class admin_Insert_Pros extends HttpServlet {
 			inputStream = filePart.getInputStream();
 		}
 		System.out.println(request.getParameter("rating"));
-		ProductUtils.InsertPro(conn, productID, name,description, price,quantity,categoryID,viewed,inputStream);
+		ProductUtils.InsertPro(conn, productID, name,description, price,quantity,categoryID,viewed,inputStream,Float.parseFloat(request.getParameter("rating")));
 		response.sendRedirect (request.getContextPath()+"/admin-ListProduct");
 		
 		

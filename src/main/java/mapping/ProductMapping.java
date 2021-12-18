@@ -19,6 +19,7 @@ public class ProductMapping {
 			pd.setQuantity(rs.getInt("quantity"));
 			pd.setViewed(rs.getInt("viewed"));
 			pd.setBase64Image(Bindimg.img(rs.getBlob("pic")));
+			pd.setRate(rs.getInt("rate"));
 			return pd;
 			
 		} catch (Exception e) {

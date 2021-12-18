@@ -56,5 +56,41 @@ public class CartUtils {
 			e.printStackTrace();
 		}
 	}
+	public static void changeStatus(Connection conn, int cartID, int proID, int status) {
+		// TODO Auto-generated method stub
+		try {
+			String sql = "EXEC dbo.us_changeStatus @cartID = ? , @proID =? ,@status = ?";
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, cartID);
+			pstm.setInt(2, proID);
+			pstm.setInt(3, status);
+			pstm.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	public static int getTotalPriceItem(Connection conn, int cartID, int proID) {
+		// TODO Auto-generated method stub
+		try {
+			String sql = "SELECT dbo.getTotalPriceItem(?,?)";
+			PreparedStatement pstm = conn.prepareStatement(sql);
+			pstm.setInt(1, cartID);
+			pstm.setInt(2, proID);
+			ResultSet rs = pstm.executeQuery();
+			if(rs.next())
+			{
+				System.out.println(rs.getInt(1));
+				return rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	
 
 }

@@ -86,6 +86,7 @@ pageEncoding="UTF-8"%>
                                                     <th scope="col">Mô Tả</th>
                                                     <th scope="col">Số Lượng</th>
                                                     <th scope="col">Views</th>
+                                                    <th scope="col">Rate</th>
                                                     <th scope="col">Actions</th>
                                                 </tr>
                                             </thead>
@@ -107,6 +108,7 @@ pageEncoding="UTF-8"%>
                                                         <td class="align-middle">${us.description}</td>
                                                         <td class="align-middle">${us.quantity}</td>
                                                         <td class="align-middle">${us.viewed}</td>
+                                                        <td class="align-middle"><div class"custom-width-star"><i data-star="${us.rate}"></i></div>(${us.rate})</td>                                                       
                                                         <td class="align-middle">
                                                             <c:url var="editURL" value="/admin-Inser-Pros">
                                                                 <c:param name="type" value="edit" />
@@ -181,6 +183,7 @@ pageEncoding="UTF-8"%>
                                                         <td class="align-middle">${us.description}</td>
                                                         <td class="align-middle">${us.quantity}</td>
                                                         <td class="align-middle">${us.viewed}</td>
+                                                        <td class="align-middle"><div class"custom-width-star"><i data-star="${us.rate}"></i></div>(${us.rate})</td>
                                                         <td class="align-middle">
                                                             <c:url var="editURL" value="/admin-Inser-Pros">
                                                                 <c:param name="type" value="edit" />

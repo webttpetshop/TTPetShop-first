@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import beans.Users;
 import conn.DBConnection;
 import utils.CartUtils;
 import utils.CategoryUtils;
+import utils.DBUtils;
 import utils.ProductUtils;
 import utils.SessionUtils;
 
@@ -41,11 +43,13 @@ public class UserCart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		List<DetailCart> list = null;
+		 System.out.println("test");
+		 Users us =(Users) SessionUtils.getInstance().getValue(request, "USERMODEL");
+		 //System.out.println(us.getCartID().getTotal());
 		 Connection conn = null;
 		 try {
 			 
 			 conn = DBConnection.getConnection();
-			 Users us =(Users) SessionUtils.getInstance().getValue(request, "USERMODEL");
 			 list = CartUtils.getLstDetailCarts(conn, us.getCartID().getCartID());
 			
 		} catch (Exception e) {
@@ -54,7 +58,7 @@ public class UserCart extends HttpServlet {
 		}
 		request.setAttribute("detailCartList", list);
 		RequestDispatcher rd=  request.getRequestDispatcher ("/WEB-INF/views/web/detailCart.jsp"); 
-		   rd.forward (request, response);
+		rd.forward (request, response);
 	}
 
 	/**
@@ -62,7 +66,29 @@ public class UserCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getParameter("action");
+		Connection conn = null;
+		List<DetailCart> list = null;
+		 try {
+				Users us =(Users) SessionUtils.getInstance().getValue(request, "USERMODEL");
+				int proID = Integer.parseInt(request.getParameter("productID"));
+				conn = DBConnection.getConnection();
+				if (action.equalsIgnoreCase("changeStatus"))
+				{
+					int status = Integer.parseInt(request.getParameter("status"));
+					CartUtils.changeStatus(conn, us.getCartID().getCartID(), proID, status);
+				}
+				else if(action.equalsIgnoreCase("changeQuantity")){
+					int quantity = Integer.parseInt(request.getParameter("quantity"));
+					CartUtils.InsertDetailCart(conn, us.getCartID().getCartID(), proID, quantity);
+				}
+				Users model = DBUtils.findUserByID(conn, us.getUsername() , us.getPassword());
+				SessionUtils.getInstance().putValue(request, "USERMODEL", model);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
 }

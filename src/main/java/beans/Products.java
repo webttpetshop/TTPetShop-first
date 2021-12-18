@@ -8,8 +8,16 @@ public class Products {
 	private String description ;
 	private int quantity ;
 	private int viewed;
+	private float rate;
 
 	
+	public float getRate() {
+		return rate;
+	}
+
+	public void setRate(float rate) {
+		this.rate = rate;
+	}
 	private String base64Image;
 	 
 	 
