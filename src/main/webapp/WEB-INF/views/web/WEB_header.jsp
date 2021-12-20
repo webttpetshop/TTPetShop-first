@@ -99,7 +99,7 @@
 	                            <c:if test="${not empty USERMODEL }">
 	                                <span class="arrow_carrot-down"></span>
 	                                <ul>
-	                                    <li><a href="#">Edit Profile</a></li>
+	                                    <li><a href="User-profile">Edit Profile</a></li>
 	                                    <li><a href='<c:url value="/log-out?action=logout"/>'>Logout</a></li>
 	                                </ul>
                                     <div class="header__top__right__auth">

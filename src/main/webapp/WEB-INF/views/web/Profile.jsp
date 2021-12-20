@@ -26,7 +26,7 @@
                     <div class="panel-body">
                         <ul>
                             <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
-                            <li><a href="editProfile.jsp"><i class="fa fa-edit"></i> Edit Profile</a></li>
+                            <li><a href="User-editProfile"><i class="fa fa-edit"></i> Edit Profile</a></li>
                             <li><a href="#"><i class="fa fa-envelope-o"></i> Messages</a></li>
                             <li><a href="#"><i class="fa fa-sign-out"></i> Sign Out</a></li>
                         </ul>
