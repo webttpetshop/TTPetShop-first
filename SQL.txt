@@ -237,6 +237,14 @@ CREATE TABLE Cart (
 	discountID VARCHAR(50) REFERENCES dbo.Discount(discountID)
 )
 GO
+ALTER TABLE dbo.Cart ALTER COLUMN username VARCHAR(25)
+go
+ALTER TABLE dbo.Cart 
+  ADD CONSTRAINT fk_Cart_User_delete 
+  FOREIGN KEY (username) 
+  REFERENCES Users(username) 
+  ON DELETE CASCADE;
+go
 	--FOREIGN KEY(cartID) REFERENCES Cart(cartID),
 CREATE TABLE DetailCart (
 	--username VARCHAR(25) NOT NULL REFERENCES Users(username),
@@ -248,8 +256,13 @@ CREATE TABLE DetailCart (
 
 )
 GO
-
-
+ALTER TABLE dbo.DetailCart 
+  ADD CONSTRAINT fk_Cart_Detail_delete 
+  FOREIGN KEY (cartID) 
+  REFERENCES Cart(cartID) 
+  ON DELETE CASCADE;
+go
+--------------------------------------------------Store proc and function and trigger--------------------------------------------------
 CREATE PROC us_GetListProWithStatusIsOne @cartID INT
 AS
 BEGIN
@@ -390,9 +403,7 @@ BEGIN
 END
 GO
 
-SELECT * FROM dbo.Users go
-SELECT * FROM dbo.DetailCart go 
-SELECT * FROM dbo.Cart go
+
 SELECT ISNULL(SUM(total), 0)  FROM dbo.Bill go
 SELECT CONVERT(varchar,date,113) as [DD MMM YYYY HH:MM:SS:MMM] FROM dbo.Bill go
 SELECT CONVERT(varchar,date,113) AS date FROM dbo.Bill go
@@ -415,6 +426,8 @@ VALUES
     N'giảm 20%',  -- desDiscount - varchar(1)
 	20
     )
+	GO
+   ---------------------------------------------------------------------------------------------------------------
 CREATE TABLE Bill (
 	billID integer PRIMARY KEY IDENTITY,
 	username VARCHAR(25) NOT NULL REFERENCES Users(username),
@@ -424,13 +437,29 @@ CREATE TABLE Bill (
 	status integer NOT NULL DEFAULT -1 --- -1: chuaw xem 0:cho xac nhan ; 1: dang giao; 2: da nhan hang; 3: da danh gia
 )
 GO
+
+ALTER TABLE dbo.Bill ALTER COLUMN username VARCHAR(25)
+ALTER TABLE dbo.Bill 
+  ADD CONSTRAINT fk_BillID_User_delete 
+  FOREIGN KEY (username) 
+  REFERENCES Users(username) 
+  ON DELETE SET NULL;
+go
+---------------------------------------------------------------
 CREATE TABLE DetailBill (
 	billID integer NOT NULL REFERENCES Bill(billID),
 	productID integer NOT NULL REFERENCES Products(productID) ,
 	quantity integer NOT NULL DEFAULT 1
 )
 GO
-
+ALTER TABLE DetailBill 
+  ADD CONSTRAINT fk_BillID_detailBill_delete 
+  FOREIGN KEY (billID) 
+  REFERENCES Bill(billID) 
+  ON DELETE CASCADE;
+go
+------------------------------------------------------------
+SELECT * FROM dbo.Users
 SELECT * FROM dbo.Cart
 SELECT * FROM dbo.Discount
 SELECT * FROM dbo.DetailCart
@@ -438,13 +467,30 @@ SELECT * FROM dbo.Bill
 SELECT * FROM dbo.DetailBill
 DELETE FROM dbo.DetailBill
 DELETE FROM dbo.Bill
+UPDATE dbo.Bill SET status=1 where billID=13
+--DELETE FROM dbo.Users WHERE username='eqwdq' ;
+SELECT * FROM dbo.Users
 GO
-DELETE FROM dbo.Bill
-EXEC us_MapFromCartToBill @username='thanh1411', @cartID=2
-	INSERT INTO dbo.Bill
-	(username, total, discountID)  
-	SELECT 'thanh1411', total, discountID FROM dbo.Cart WHERE cartID=2
-ALTER PROC us_MapFromCartToBill @username VARCHAR(25), @cartID int
+CREATE PROC us_getDetailBillByBillID @BillID INT
+AS
+BEGIN
+    SELECT * FROM dbo.DetailBill WHERE billID=@BillID
+END
+GO
+EXEC us_cancelOrder @billID=11
+CREATE PROC us_cancelOrder @billID INT
+AS
+BEGIN
+    DELETE FROM dbo.Bill WHERE billID=@billID
+END
+CREATE PROC us_GetBillByUsernameAndStatus @username VARCHAR(25), @status INT, @status2 INT ------------------------------------------------------------------------------------
+AS
+BEGIN
+    SELECT * FROM dbo.Bill WHERE username=@username AND status=@status OR status = @status2
+END
+GO
+
+CREATE PROC us_MapFromCartToBill @username VARCHAR(25), @cartID int
 AS
 BEGIN
 	INSERT INTO dbo.Bill
