@@ -42,6 +42,9 @@
 						<label>Forms &amp; table</label>
 					</li>
 					<li class="nav-item">
+						<a href="admin-ListUser" class="nav-link"><span class="pcoded-micon"><i class="fas fa-users"></i></span><span class="pcoded-mtext">Danh Sách Users</span></a>
+					</li>
+					<li class="nav-item">
 						<a href="form_elements.html" class="nav-link"><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Form elements</span></a>
 					</li>
 					<li class="nav-item">
@@ -71,7 +74,7 @@
 				</ul>
 				<div class="card text-center">
 					<div class="card-block">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">ï¿½</button>
 						<i class="feather icon-sunset f-40"></i>
 						<h6 class="mt-3">Upgrade to pro</h6>
 						<p>upgrade for get full themes and 30min support</p>

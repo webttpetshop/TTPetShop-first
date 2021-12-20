@@ -3,7 +3,45 @@ go
 USE TTPetShop
 go
 
+CREATE FUNCTION [dbo].[GetUnsignString](@strInput NVARCHAR(4000)) 
+RETURNS NVARCHAR(4000)
+AS
+BEGIN     
+    IF @strInput IS NULL RETURN @strInput
+    IF @strInput = '' RETURN @strInput
+    DECLARE @RT NVARCHAR(4000)
+    DECLARE @SIGN_CHARS NCHAR(136)
+    DECLARE @UNSIGN_CHARS NCHAR (136)
 
+    SET @SIGN_CHARS       = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệếìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵýĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ'+NCHAR(272)+ NCHAR(208)
+    SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeeeiiiiiooooooooooooooouuuuuuuuuuyyyyyAADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD'
+
+    DECLARE @COUNTER INT
+    DECLARE @COUNTER1 INT
+    SET @COUNTER = 1
+ 
+    WHILE (@COUNTER <=LEN(@strInput))
+    BEGIN   
+      SET @COUNTER1 = 1
+      --Tim trong chuoi mau
+       WHILE (@COUNTER1 <=LEN(@SIGN_CHARS)+1)
+       BEGIN
+     IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@strInput,@COUNTER ,1) )
+     BEGIN           
+          IF @COUNTER=1
+              SET @strInput = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)-1)                   
+          ELSE
+              SET @strInput = SUBSTRING(@strInput, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)- @COUNTER)    
+              BREAK         
+               END
+             SET @COUNTER1 = @COUNTER1 +1
+       END
+      --Tim tiep
+       SET @COUNTER = @COUNTER +1
+    END
+    RETURN @strInput
+END
+GO
 CREATE TABLE Category (
 	categoryID VARCHAR(255) PRIMARY KEY ,
 	nameCat Nvarchar(255)
@@ -78,25 +116,22 @@ CREATE TABLE Products (
 	description text,
 	pic VARBINARY(MAX) ,
 	quantity integer NOT NULL DEFAULT '1',
-	viewed INTEGER DEFAULT 0
+	viewed INTEGER DEFAULT 0,
+	rate FLOAT
 
 )
 GO
-ALTER TABLE Products
-  ADD rate FLOAT; go
-
-SELECT * FROM dbo.Products
-GO
-EXEC dbo.updatePro @id = 0,           -- int
-                   @name = N'',       -- nvarchar(255)
-                   @price = 0.0,      -- float
-                   @categoryID = 0,   -- int
-                   @description = '', -- text
-                   @pic = NULL,       -- varbinary(max)
-                   @quantity = 0,     -- int
-                   @viewed = 0        -- int
+------EXEC dbo.updatePro @id = 0,           -- int
+------                   @name = N'',       -- nvarchar(255)
+------                   @price = 0.0,      -- float
+------                  @categoryID = 0,   -- int
+------                  @description = '', -- text
+------                  @pic = NULL,       -- varbinary(max)
+------                 @quantity = 0,     -- int
+------                 @viewed = 0        -- int
 
 ---------------------------------------------------------------------------------------------
+
 CREATE PROC updatePro @id INT, @name NVARCHAR(255), @price int, @categoryID VARCHAR(255), @description TEXT, @pic VARBINARY(MAX), @quantity INTEGER, @viewed INTEGER, @rate float
 AS
 BEGIN
@@ -118,7 +153,7 @@ BEGIN
 END
 GO
 
-ALTER PROC us_searchProFilter @proName NVARCHAR(MAX),@rate FLOAT, @min INT, @max INT  
+CREATE PROC us_searchProFilter @proName NVARCHAR(MAX),@rate FLOAT, @min INT, @max INT  
 AS
 BEGIN
 	IF (ISNULL(@rate, 0) != 0 and ISNULL(@min, 0) != 0)
@@ -131,11 +166,6 @@ BEGIN
 		SELECT * FROM dbo.Products WHERE dbo.GetUnsignString(name) LIKE N'%' + dbo.GetUnsignString(@proName) + '%' 
 END 
 GO
-EXEC dbo.us_searchProFilter @proName = N'sp', -- nvarchar(max)
-                            @rate = 4,    -- float
-                            @min = 0,       -- int
-                            @max = 0        -- int
- @proName=N'sp', @rate=4, @min=1000, @max=500000
 -------------------------------------------------------------------------------------------------
 CREATE TABLE Users(
 	username VARCHAR(25) PRIMARY KEY NOT NULL,
@@ -148,10 +178,335 @@ CREATE TABLE Users(
 	role integer NOT NULL DEFAULT 0
 )
 GO
-
+ALTER TABLE dbo.Users ALTER COLUMN address NVARCHAR(255)
+GO 
 SELECT * from (SELECT ROW_NUMBER() OVER (ORDER BY coins) AS r, *FROM dbo.Users) AS sub  WHERE sub.r between (2-1)*3+1 AND 2*3
+GO
+
+CREATE PROC ad_findUserByUsername @Username VARCHAR(25)
+AS
+BEGIN
+    SELECT * FROM dbo.Users WHERE username=@Username
+END
 go
 
+CREATE PROC ad_editUser @Username VARCHAR(25), @fullname NVARCHAR(255), @Email VARCHAR(255), @password VARCHAR(20), @address NVARCHAR(255), @phone VARCHAR(50), @role INT
+AS
+BEGIN
+    UPDATE dbo.Users SET fullname=@fullname, email=@Email, password=@password, address=@address, phone=@phone, role=@role WHERE username=@Username
+END
+GO
+
+CREATE PROC ad_addUser @Username VARCHAR(25), @fullname NVARCHAR(255), @Email VARCHAR(255), @password VARCHAR(20), @address NVARCHAR(255), @phone VARCHAR(50), @role INT
+AS
+BEGIN
+    INSERT dbo.Users
+    (
+        username,
+        email,
+        password,
+        fullname,
+        address,
+        phone,
+        role
+    )
+    VALUES
+    (   @Username,  -- username - varchar(25)
+        @Email,  -- email - varchar(255)
+        @password,  -- password - varchar(20)
+        @fullname, -- fullname - nvarchar(255)
+        @address,  -- address - varchar(255)
+        @phone,  -- phone - varchar(50)
+        @role    -- role - int
+        )
+END
+go
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE Discount (
+	discountID VARCHAR(50) PRIMARY KEY,
+	quantity integer NOT NULL DEFAULT '1',
+	quanlity int DEFAULT 1,
+	desDiscount varchar NOT NULL
+
+)
+GO
+CREATE TABLE Cart (
+	cartID INT PRIMARY KEY IDENTITY,
+	username VARCHAR(25) NOT NULL REFERENCES Users(username),
+	total int DEFAULT 0,
+	discountID VARCHAR(50) REFERENCES dbo.Discount(discountID)
+)
+GO
+	--FOREIGN KEY(cartID) REFERENCES Cart(cartID),
+CREATE TABLE DetailCart (
+	--username VARCHAR(25) NOT NULL REFERENCES Users(username),
+	cartID INT REFERENCES dbo.Cart(cartID),
+	productID integer NOT NULL,
+	quantity integer NOT NULL DEFAULT 1,
+	FOREIGN KEY(productID) REFERENCES dbo.Products(productID),
+	status INT DEFAULT 0   --0 là ko tính vào  total của cart ; 1 là tính vào total
+
+)
+GO
+
+
+CREATE PROC us_GetListProWithStatusIsOne @cartID INT
+AS
+BEGIN
+    SELECT * FROM dbo.DetailCart WHERE cartID=@cartID AND status=1
+END
+GO
+EXEC dbo.us_GetListProWithStatusIsOne @cartID = 2 -- int
+
+
+--------SELECT dbo.us_findProWithStatusIsOne(1) AS br
+go
+--------SELECT dbo.getTotalPriceItem(3,2) AS bro 
+GO
+CREATE FUNCTION us_findProWithStatusIsOne(@cartID INT) RETURNS int
+AS
+BEGIN
+	DECLARE @total int
+	SELECT @total=ISNULL(SUM(status), 0) FROM dbo.DetailCart WHERE cartID=@cartID AND status = 1 GROUP BY cartID
+	RETURN @total
+END
+go
+
+CREATE FUNCTION getTotalPriceItem (@proID INT, @cartID INT)
+RETURNS int 
+AS BEGIN
+
+	DECLARE @total int
+    SELECT @total=dtC.quantity*pr.price 
+	FROM dbo.DetailCart AS dtC, dbo.Products AS pr
+	WHERE dtC.productID=pr.productID AND dtC.cartID=@cartID AND dtC.productID=@proID
+	RETURN @total
+	END
+GO
+
+CREATE PROC us_UpdateDisIDforUserCart @username VARCHAR(25) , @disID VARCHAR(50)
+AS
+BEGIN
+    UPDATE dbo.Cart SET discountID=@disID WHERE username=@username
+END
+GO
+
+CREATE PROC us_changeStatus @cartID INT, @proID INT, @status int
+AS
+BEGIN
+   UPDATE dbo.DetailCart SET status=@status WHERE  productID=@proID AND cartID=@cartID 
+END
+GO
+                            
+CREATE PROC us_addtoDetailCart @proID INT, @amount INT, @cartID int
+AS
+BEGIN
+	DECLARE @isExistPro INT;
+	SELECT @isExistPro = productID
+	FROM dbo.DetailCart WHERE productID=@proID AND cartID=@cartID
+	IF (@isExistPro IS NOT NULL)
+		UPDATE dbo.DetailCart SET quantity=quantity+@amount WHERE productID=@proID AND cartID=@cartID
+	ELSE
+	INSERT dbo.DetailCart
+	(
+	    cartID,
+	    productID,
+	    quantity,
+	    status
+	)
+	VALUES
+	(   @cartID, -- userID - varchar(20)
+	    @proID,  -- productID - int
+	    @amount,  -- quantity - int
+	    0   -- status - int
+	    )
+
+END
+GO
+
+SELECT (1-CAST(50 AS float)/100)*50
+GO
+
+
+
+--EXEC us_UpdateDisIDforUserCart @username='thanh1411' , @disID=NULL
+GO
+UPDATE dbo.Cart SET total=0 WHERE username='thanh1411'
+go
+ALTER TRIGGER us_UpdateDisID ON dbo.Cart AFTER INSERT , UPDATE ---này là khúc thêm cái discount dô hay xóa đi nè
+AS
+BEGIN
+	DECLARE @disC VARCHAR(50)
+	DECLARE @cartID int
+	SELECT @cartID=i.cartID FROM Inserted AS i
+	SELECT @disC=discountID FROM dbo.Cart WHERE cartID=@cartID
+	IF @disC IS not NULL
+		BEGIN
+			DECLARE @finalTotal INT
+			SELECT @finalTotal=(1-CAST(dc.quanlity AS float)/100)*c.total FROM dbo.Cart AS c, dbo.Discount AS dc WHERE c.discountID=dc.discountID AND c.cartID=@cartID
+			UPDATE dbo.Cart SET total=@finalTotal WHERE cartID=@cartID
+        END
+	ELSE
+	BEGIN
+		DECLARE @total INT
+		SELECT @total=ISNULL(SUM(total), 0) 
+		FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE cartID=@cartID AND dtC.productID = pr.productID AND status=1) AS br
+		UPDATE dbo.Cart SET total=@total WHERE cartID=@cartID
+	END
+END
+GO
+drop TRIGGER us_delDisID ON dbo.Cart AFTER DELETE ----------------sau khi del discount cuar carrt
+AS
+BEGIN
+    DECLARE @total INT
+	DECLARE @cartID int
+	SELECT @cartID=i.cartID FROM Deleted AS i
+	SELECT @total=ISNULL(SUM(total), 0) 
+	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE cartID=@cartID AND dtC.productID = pr.productID AND status=1) AS br
+	UPDATE dbo.Cart SET total=@total WHERE cartID=@cartID
+END
+go
+ALTER TRIGGER us_afterEditCartDetail ON dbo.DetailCart AFTER INSERT,UPDATE
+AS
+BEGIN
+    DECLARE @total INT
+	DECLARE @cartID int
+	SELECT @cartID=i.cartID FROM Inserted AS i
+	SELECT @total=ISNULL(SUM(total), 0) 
+	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE cartID=@cartID AND dtC.productID = pr.productID AND status=1) AS br
+	UPDATE dbo.Cart SET total=@total WHERE cartID=@cartID
+END
+GO
+ALTER TRIGGER us_afterDelCartDetail ON dbo.DetailCart FOR DELETE
+AS 
+BEGIN
+    DECLARE @total INT
+	DECLARE @cartID int
+	SELECT @cartID=i.cartID FROM Deleted AS i
+	SELECT @total=ISNULL(SUM(total), 0) 
+	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE cartID=@cartID AND dtC.productID = pr.productID AND status=1) AS br
+	UPDATE dbo.Cart SET total=@total WHERE cartID=@cartID
+
+END
+GO
+
+SELECT * FROM dbo.Users go
+SELECT * FROM dbo.DetailCart go 
+SELECT * FROM dbo.Cart go
+SELECT ISNULL(SUM(total), 0)  FROM dbo.Bill go
+SELECT CONVERT(varchar,date,113) as [DD MMM YYYY HH:MM:SS:MMM] FROM dbo.Bill go
+SELECT CONVERT(varchar,date,113) AS date FROM dbo.Bill go
+SELECT CONVERT(varchar,date,0) AS date FROM dbo.Bill go
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+ALTER TABLE dbo.Discount ALTER COLUMN desDiscount NVARCHAR(255)
+GO
+INSERT dbo.Discount
+(
+    discountID,
+    quantity,
+    desDiscount,
+	quanlity
+)
+VALUES
+(   'dis20TT', -- discountID - varchar(1)
+    5,  -- quantity - int
+    N'giảm 20%',  -- desDiscount - varchar(1)
+	20
+    )
+CREATE TABLE Bill (
+	billID integer PRIMARY KEY IDENTITY,
+	username VARCHAR(25) NOT NULL REFERENCES Users(username),
+	total int NOT NULL DEFAULT 0,
+	discountID VARCHAR(50) REFERENCES Discount(discountID),
+	date datetime DEFAULT GETDATE(),
+	status integer NOT NULL DEFAULT -1 --- -1: chuaw xem 0:cho xac nhan ; 1: dang giao; 2: da nhan hang; 3: da danh gia
+)
+GO
+CREATE TABLE DetailBill (
+	billID integer NOT NULL REFERENCES Bill(billID),
+	productID integer NOT NULL REFERENCES Products(productID) ,
+	quantity integer NOT NULL DEFAULT 1
+)
+GO
+
+SELECT * FROM dbo.Cart
+SELECT * FROM dbo.Discount
+SELECT * FROM dbo.DetailCart
+SELECT * FROM dbo.Bill
+SELECT * FROM dbo.DetailBill
+DELETE FROM dbo.DetailBill
+DELETE FROM dbo.Bill
+GO
+DELETE FROM dbo.Bill
+EXEC us_MapFromCartToBill @username='thanh1411', @cartID=2
+	INSERT INTO dbo.Bill
+	(username, total, discountID)  
+	SELECT 'thanh1411', total, discountID FROM dbo.Cart WHERE cartID=2
+ALTER PROC us_MapFromCartToBill @username VARCHAR(25), @cartID int
+AS
+BEGIN
+	INSERT INTO dbo.Bill
+	(username, total, discountID)  
+	SELECT @username, total, discountID FROM dbo.Cart WHERE cartID=@cartID
+	DECLARE @billID int 
+	SELECT @billID=billID  FROM dbo.Bill WHERE username=@username AND status=-1 AND billID NOT IN (SELECT DISTINCT dtB.billID FROM DetailBill AS dtB)
+    INSERT INTO DetailBill (billID, productID, quantity)
+	SELECT @billID, productID, quantity FROM dbo.DetailCart WHERE cartID=@cartID AND status=1
+
+END
+GO
+
+CREATE TRIGGER ad_updateQuantityPro ON dbo.Bill AFTER UPDATE
+AS
+BEGIN
+    DECLARE @status INT
+	DECLARE @billID INT
+    SELECT @status=i.status ,@billID=i.billID FROM Inserted AS i
+	
+	IF(@status = 2)
+	BEGIN
+	    UPDATE dbo.Products SET quantity=tempdb WHERE productID IN (SELECT productID AS productID, quantity FROM dbo.DetailBill WHERE billID=@billID)
+	END
+END
+go
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE review (
+	id INT PRIMARY KEY IDENTITY,
+	productID INT REFERENCES dbo.Products(productID),
+	userID VARCHAR(25) REFERENCES dbo.Users(username),
+	rating FLOAT DEFAULT 0,
+	review TEXT,
+)
+GO
+------------------------------------------------------
+--ALTER TABLE Products WITH CHECK ADD CONSTRAINT Products_fk0 FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
+--GO
+
+-----------------------------------------------------------store proc--------------------------------------------------------
+
+
+---------------------------------------------------trigger for user----------------------------------------------------------
+CREATE TRIGGER ad_afterCreUs ON dbo.Users AFTER INSERT
+AS BEGIN
+		DECLARE @username VARCHAR(25)
+		SELECT @username=i.username FROM Inserted AS i
+       INSERT dbo.Cart
+       (
+           username
+       )
+       VALUES
+       (   @username
+           )
+   END
+GO
+
+-----------------------------------------------------------------function--------------------------------------------------------
+
+------------------------------------------------------------------Insert
+SELECT * FROM dbo.Cart
 INSERT INTO dbo.Users
 (
     username,
@@ -194,196 +549,3 @@ VALUES
 
 
 GO
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE Cart (
-	cartID INT PRIMARY KEY IDENTITY,
-	username VARCHAR(25) NOT NULL REFERENCES Users(username),
-	total int DEFAULT 0
-)
-GO
-	--FOREIGN KEY(cartID) REFERENCES Cart(cartID),
-CREATE TABLE DetailCart (
-	--username VARCHAR(25) NOT NULL REFERENCES Users(username),
-	cartID INT REFERENCES dbo.Cart(cartID),
-	productID integer NOT NULL,
-	quantity integer NOT NULL DEFAULT 1,
-	FOREIGN KEY(productID) REFERENCES dbo.Products(productID),
-	status INT DEFAULT 0
-
-)
-GO
-CREATE PROC us_changeStatus @cartID INT, @proID INT, @status int
-AS
-BEGIN
-   UPDATE dbo.DetailCart SET status=@status WHERE  productID=@proID AND cartID=@cartID 
-END
-GO
-                            
-CREATE PROC us_addtoDetailCart @proID INT, @amount INT, @cartID int
-AS
-BEGIN
-	DECLARE @isExistPro INT;
-	SELECT @isExistPro = productID
-	FROM dbo.DetailCart WHERE productID=@proID AND cartID=@cartID
-	IF (@isExistPro IS NOT NULL)
-		UPDATE dbo.DetailCart SET quantity=quantity+@amount WHERE productID=@proID AND cartID=@cartID
-	ELSE
-	INSERT dbo.DetailCart
-	(
-	    cartID,
-	    productID,
-	    quantity,
-	    status
-	)
-	VALUES
-	(   @cartID, -- userID - varchar(20)
-	    @proID,  -- productID - int
-	    @amount,  -- quantity - int
-	    0   -- status - int
-	    )
-
-END
-GO
-
-
-CREATE TRIGGER us_afterEditCartDetail ON dbo.DetailCart AFTER INSERT,UPDATE
-AS
-BEGIN
-    DECLARE @total INT
-	DECLARE @cartID int
-	SELECT @cartID=i.cartID FROM Inserted AS i
-	SELECT @total=ISNULL(SUM(total), 0) 
-	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE cartID=@cartID AND dtC.productID = pr.productID AND status=1) AS br
-	UPDATE dbo.Cart SET total=@total WHERE cartID=@cartID
-
-END
-GO
-CREATE TRIGGER us_afterDelCartDetail ON dbo.DetailCart FOR DELETE
-AS 
-BEGIN
-    DECLARE @total INT
-	DECLARE @cartID int
-	SELECT @cartID=i.cartID FROM Deleted AS i
-	SELECT @total=ISNULL(SUM(total), 0) 
-	FROM (SELECT dtc.quantity*pr.price AS total FROM dbo.DetailCart AS dtC, dbo.Products AS pr WHERE cartID=@cartID AND dtC.productID = pr.productID AND status=1) AS br
-	UPDATE dbo.Cart SET total=@total WHERE cartID=@cartID
-
-END
-GO
-
-CREATE FUNCTION getTotalPriceItem (@proID INT, @cartID INT)
-RETURNS int 
-AS BEGIN
-
-	DECLARE @total int
-    SELECT @total=dtC.quantity*pr.price 
-	FROM dbo.DetailCart AS dtC, dbo.Products AS pr
-	WHERE dtC.productID=pr.productID AND dtC.cartID=@cartID AND dtC.productID=@proID
-	RETURN @total
-	END
-GO
-SELECT dbo.getTotalPriceItem(3,2) AS bro GO
-SELECT * FROM dbo.Users go
-SELECT * FROM dbo.DetailCart go 
-SELECT * FROM dbo.Cart go
-SELECT ISNULL(SUM(total), 0)  FROM dbo.Bill go
-SELECT CONVERT(varchar,date,113) as [DD MMM YYYY HH:MM:SS:MMM] FROM dbo.Bill go
-SELECT CONVERT(varchar,date,113) AS date FROM dbo.Bill go
-SELECT CONVERT(varchar,date,0) AS date FROM dbo.Bill go
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE Discount (
-	discountID varchar PRIMARY KEY,
-	quantity integer NOT NULL DEFAULT '1',
-	desDiscount varchar NOT NULL,
-
-)
-GO
-CREATE TABLE Bill (
-	billID integer PRIMARY KEY IDENTITY,
-	username VARCHAR(25) NOT NULL REFERENCES Users(username),
-	total int NOT NULL DEFAULT 0,
-	discountID VARCHAR REFERENCES Discount(discountID),
-	date datetime DEFAULT GETDATE(),
-	status integer NOT NULL DEFAULT '0' --0:cho xac nhan ; 1: dang giao; 2: da nhan hang; 3: da danh gia
-)
-GO
-CREATE TABLE DetailBill (
-	billID integer NOT NULL REFERENCES Bill(billID),
-	productID integer NOT NULL REFERENCES Products(productID) ,
-	quantity integer NOT NULL DEFAULT 1
-)
-GO
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-CREATE TABLE review (
-	id INT PRIMARY KEY IDENTITY,
-	productID INT REFERENCES dbo.Products(productID),
-	userID VARCHAR(25) REFERENCES dbo.Users(username),
-	rating FLOAT DEFAULT 0,
-	review TEXT,
-)
-GO
-------------------------------------------------------
---ALTER TABLE Products WITH CHECK ADD CONSTRAINT Products_fk0 FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
---GO
-
------------------------------------------------------------store proc--------------------------------------------------------
-
-
----------------------------------------------------trigger for user----------------------------------------------------------
-CREATE TRIGGER ad_afterCreUs ON dbo.Users AFTER INSERT
-AS BEGIN
-		DECLARE @username VARCHAR(25)
-		SELECT @username=i.username FROM Inserted AS i
-       INSERT dbo.Cart
-       (
-           username
-       )
-       VALUES
-       (   @username
-           )
-   END
-GO
-
------------------------------------------------------------------function--------------------------------------------------------
-CREATE FUNCTION [dbo].[GetUnsignString](@strInput NVARCHAR(4000)) 
-RETURNS NVARCHAR(4000)
-AS
-BEGIN     
-    IF @strInput IS NULL RETURN @strInput
-    IF @strInput = '' RETURN @strInput
-    DECLARE @RT NVARCHAR(4000)
-    DECLARE @SIGN_CHARS NCHAR(136)
-    DECLARE @UNSIGN_CHARS NCHAR (136)
-
-    SET @SIGN_CHARS       = N'ăâđêôơưàảãạáằẳẵặắầẩẫậấèẻẽẹéềểễệếìỉĩịíòỏõọóồổỗộốờởỡợớùủũụúừửữựứỳỷỹỵýĂÂĐÊÔƠƯÀẢÃẠÁẰẲẴẶẮẦẨẪẬẤÈẺẼẸÉỀỂỄỆẾÌỈĨỊÍÒỎÕỌÓỒỔỖỘỐỜỞỠỢỚÙỦŨỤÚỪỬỮỰỨỲỶỸỴÝ'+NCHAR(272)+ NCHAR(208)
-    SET @UNSIGN_CHARS = N'aadeoouaaaaaaaaaaaaaaaeeeeeeeeeeiiiiiooooooooooooooouuuuuuuuuuyyyyyAADEOOUAAAAAAAAAAAAAAAEEEEEEEEEEIIIIIOOOOOOOOOOOOOOOUUUUUUUUUUYYYYYDD'
-
-    DECLARE @COUNTER INT
-    DECLARE @COUNTER1 INT
-    SET @COUNTER = 1
- 
-    WHILE (@COUNTER <=LEN(@strInput))
-    BEGIN   
-      SET @COUNTER1 = 1
-      --Tim trong chuoi mau
-       WHILE (@COUNTER1 <=LEN(@SIGN_CHARS)+1)
-       BEGIN
-     IF UNICODE(SUBSTRING(@SIGN_CHARS, @COUNTER1,1)) = UNICODE(SUBSTRING(@strInput,@COUNTER ,1) )
-     BEGIN           
-          IF @COUNTER=1
-              SET @strInput = SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)-1)                   
-          ELSE
-              SET @strInput = SUBSTRING(@strInput, 1, @COUNTER-1) +SUBSTRING(@UNSIGN_CHARS, @COUNTER1,1) + SUBSTRING(@strInput, @COUNTER+1,LEN(@strInput)- @COUNTER)    
-              BREAK         
-               END
-             SET @COUNTER1 = @COUNTER1 +1
-       END
-      --Tim tiep
-       SET @COUNTER = @COUNTER +1
-    END
-    RETURN @strInput
-END
-GOa

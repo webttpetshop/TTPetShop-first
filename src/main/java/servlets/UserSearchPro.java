@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import beans.Discount;
 import beans.Products;
 import conn.DBConnection;
+import utils.CartUtils;
 import utils.ProductUtils;
 
 /**
@@ -82,7 +84,15 @@ public class UserSearchPro extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String action = request.getParameter("action");
+		Connection conn = null;
+		try {
+		    conn = DBConnection.getConnection();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
 }

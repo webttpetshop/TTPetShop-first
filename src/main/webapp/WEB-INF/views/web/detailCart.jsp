@@ -9,6 +9,7 @@
     <title>TTPetShop | Homepage</title>
 </head>
 <body>
+    <input type="hidden" id="showModal" name="showModal" value="${showModal}">
 	<jsp:include page="WEB_header.jsp" />
 	<section class="shoping-cart spad">
         <div class="container">
@@ -73,27 +74,69 @@
                     <div class="shoping__continue">
                         <div class="shoping__discount">
                             <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                            <form action="#" >
+                                <input type="text" placeholder="Enter your coupon code" name="discountID" id="discountID" value="${USERMODEL.cartID.discountID }">
+                            	<span id="here1">
+                                <c:if test="${not empty USERMODEL.cartID.discountID }">
+                                    <i id="removeDiscount" class="fa fa-trash-o bigger-110 pink" data-toggle="tooltip"
+                                                        title="Xóa Sản Phẩm" style=" margin-right: 15px; "></i>
+                                </c:if>
+                            	</span> 
+                                <button type="button" class="addDiscount site-btn">APPLY COUPON</button>
                             </form>
+                            <span id="desDiscount" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6" >
+                <div id="totalHere">
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
+                            <li>Subtotal 
+                            <c:if test="${not empty USERMODEL.cartID.discountID }">
+                                <span>-${USERMODEL.cartID.discount.quanlity}%</span>
+                            </c:if>
+                            </li>
                             <li>Total <span id="here">${USERMODEL.cartID.total}</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <!-- <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a> -->
+                        <form action="./User-Cart" method="post">
+                            <input type="hidden" name="action" value="checkout">
+                            <button type="submit" class="primary-btn" style=" border: none; width: 100%; ">Check Out</button>
+                        </form>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Shoping Cart Section End -->
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- <form method="post" action="${pageContext.request.contextPath }/adminListProduct?type=delete"> -->
+                <div class="modal-body">
+                    <div class="text-center">${showModal}
+                    </div>
+                    <!-- <input type="hidden" name="idsp" id="idsp" value=""> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- <button id="the-submit" type="button" class="btn btn-primary">Save changes</button> -->
+                </div>
+                <!-- </form> -->
+            </div>
+        </div>
+    </div>
     <jsp:include page="WEB_footerJS.jsp" />
 
     <script type="text/javascript">
@@ -203,6 +246,96 @@
         	var final_price = document.getElementById("final_price" + checkedValue);
         	var price_item = Number(document.getElementById("price_item" + checkedValue).innerHTML); 
         	final_price.innerText= price_item*newVal;
+        });
+
+        $('.addDiscount').click(function (e) {
+            e.preventDefault();
+            var disID = $('#discountID').val();
+            alert(disID);
+            $.ajax({
+                url: "/TTPetShop/User-Cart",
+                method: "POST",
+                data: {
+                    action: "addDiscountID",
+                    discountID: disID
+                },
+                success: function (data) {
+                    alert(data);
+                    $("#here1").load(window.location.href + " #here1" ); 
+                    $("#totalHere").load(window.location.href + " #totalHere" );  
+                    $('#desDiscount').fadeIn().html(data);  
+
+                    //$('#myModal').modal('show');
+                    //$(".modal-body #bookId").html(data).show();
+                    //alert('shown');
+                }
+
+            });
+        });
+
+        $(document).on('click',"#removeDiscount",function(){
+            var disID = $('#discountID').val();
+            $.ajax({
+                url: "/TTPetShop/User-Cart",
+                method: "POST",
+                data: {
+                    action: "removeDiscountID",
+                    discountID: disID
+                },
+                success: function (data) {
+                    alert(data);
+                    //$("#discountID").load(window.location.href + " #discountID" ); 
+                    $("#discountID").val('');
+                    $("#here1").load(window.location.href + " #here1" ); 
+                    $("#totalHere").load(window.location.href + " #totalHere" );  
+                    $('#desDiscount').fadeIn().html(data);  
+                          setTimeout(function(){  
+                               $('#desDiscount').fadeOut("Slow");  
+                          }, 2000); 
+                    //$('#myModal').modal('show');
+                    //$(".modal-body #bookId").html(data).show();
+                    //alert('shown');
+                }
+
+            });
+        });
+
+        // $('#removeDiscount').click(function (e){
+        //     e.preventDefault();
+        //     var disID = $('#discountID').val();
+        //     $.ajax({
+        //         url: "/TTPetShop/User-Cart",
+        //         method: "POST",
+        //         data: {
+        //             action: "removeDiscountID",
+        //             discountID: disID
+        //         },
+        //         success: function (data) {
+        //             alert(data);
+        //             $("#discountID").load(window.location.href + " #discountID" ); 
+        //             $("#here1").load(window.location.href + " #here1" ); 
+        //             $("#totalHere").load(window.location.href + " #totalHere" );  
+        //             $('#desDiscount').fadeIn().html(data);  
+
+        //             //$('#myModal').modal('show');
+        //             //$(".modal-body #bookId").html(data).show();
+        //             //alert('shown');
+        //         }
+
+        //     });
+        // });
+
+        
+
+       // show modal by check value of input 
+        $(window).on('load', function () {
+            var check = $( "#showModal" ).val();
+            if(check != "")
+            {
+                $('#exampleModal').modal('show');
+                //alert(check);
+            }
+            //alert(check);
         });
     </script>
 </body>

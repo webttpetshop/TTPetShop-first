@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class editProfile
+ * Servlet implementation class signup
  */
-@WebServlet("/User-editProfile")
-public class editProfile extends HttpServlet {
+@WebServlet("/signup")
+public class UserSignup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public editProfile() {
+    public UserSignup() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,9 +28,7 @@ public class editProfile extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/web/editProfile.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/web/signup.jsp");
 		rd.forward(request, response);
 	}
 

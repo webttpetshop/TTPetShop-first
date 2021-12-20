@@ -30,6 +30,7 @@ public class CartMapping {
 			cart.setCartID(rs.getInt("cartID"));
 			cart.setTotal(rs.getInt("total"));
 			cart.setUsername(rs.getString("username"));
+			cart.setDiscountID(rs.getString("discountID"));
 			return cart;
 		} catch (Exception e) {
 			return null;

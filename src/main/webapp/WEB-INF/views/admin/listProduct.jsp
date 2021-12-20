@@ -13,7 +13,7 @@ pageEncoding="UTF-8"%>
 
 <body>
     <jsp:include page="SUB_header.jsp" />
-    <!-- <input type="hidden" id="showModal" name="showModal" value="${showModal}"> show modal by attribute-->
+     <!--<input type="hidden" id="showModal" name="showModal" value="${showModal}"> show modal by attribute -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
             <div class="pcoded-content">
@@ -122,82 +122,7 @@ pageEncoding="UTF-8"%>
                                                             <button type="button" class="btn btn-primary"
                                                                 data-catid="${us.productID}" data-toggle="modal"
                                                                 data-target="#exampleModal">
-                                                                Launch demo modal
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </form>
-                                    <nav aria-label="Page navigation example">
-                                        <ul class="pagination justify-content-center">
-                                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                            <c:forEach begin="1" end="${total}" var="i">
-                                                <li class="page-item"><a class="page-link"
-                                                        href="admin-ListProduct?page=${i}">${i}</a></li>
-                                            </c:forEach>
-                                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <!-- <br> -->
-                                    <form id="the-form" method="post"
-                                        action="${pageContext.request.contextPath }/admin-ListProduct?type=delete">
-                                        
-                                        <br>
-                                        <div class"custom-width-star"><i data-star="4.5"></i></div>
-                                        <br>
-                                        <table class="table table-image">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"><input type="checkbox" id="checkBoxAll" /></th>
-                                                    <th scope="col">Mã Sản Phẩm</th>
-                                                    <th scope="col">Hình Ảnh</th>
-                                                    <th scope="col">Tên SP</th>
-                                                    <th scope="col">Giá</th>
-                                                    <th scope="col">Mã Loại SP</th>
-                                                    <th scope="col">Mô Tả</th>
-                                                    <th scope="col">Số Lượng</th>
-                                                    <th scope="col">Views</th>
-                                                    <th scope="col">Actions</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody id="myTable">
-                                                <c:forEach items="${proList}" var="us">
-                                                    <tr>
-                                                        <td class="align-middle"><input type="checkbox" class="chkCheckBoxId"
-                                                                class="custom-control-input" name="productID"
-                                                                value="${us.productID}"></td>
-                                                        <td class="align-middle">${us.productID}</td>
-                                                        <td class="w-251 align-middle"">
-                                                            <div style="background-image:url("data:image/png;base64,${us.base64Image}");"></div>
-                                                        </td>
-                                                        <td class="align-middle">${us.name}</td>
-                                                        <td class="align-middle">${us.price} &#8363</td>
-                                                        <td class="align-middle">${us.categoryID}</td>
-                                                        <td class="align-middle">${us.description}</td>
-                                                        <td class="align-middle">${us.quantity}</td>
-                                                        <td class="align-middle">${us.viewed}</td>
-                                                        <td class="align-middle"><div class"custom-width-star"><i data-star="${us.rate}"></i></div>(${us.rate})</td>
-                                                        <td class="align-middle">
-                                                            <c:url var="editURL" value="/admin-Inser-Pros">
-                                                                <c:param name="type" value="edit" />
-                                                                <c:param name="id" value="${us.productID}" />
-                                                            </c:url>
-                                                            <a class="btn btn-primary1 btn-edit" data-toggle="tooltip"
-                                                                title="Edit" href=${editURL}><i
-                                                                    class="fa fa-pencil-square-o"
-                                                                    style=" margin-right: 0;" aria-hidden="true"></i>
-                                                            </a>
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-catid="${us.productID}" data-toggle="modal"
-                                                                data-target="#exampleModal">
-                                                                Launch demo modal
+                                                                Xóa
                                                             </button>
                                                         </td>
                                                     </tr>

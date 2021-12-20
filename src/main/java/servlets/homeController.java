@@ -81,6 +81,7 @@ public class homeController extends HttpServlet {
 					 request.setAttribute("Categories", CategoryUtils.getListCat(conn));
 					 request.setAttribute("proList", list);
 					 RequestDispatcher rd=  request.getRequestDispatcher ("/WEB-INF/views/web/TTPetShopHome.jsp"); 
+					 //RequestDispatcher rd=  request.getRequestDispatcher ("/WEB-INF/views/web/checkout.jsp"); 
 					 rd.forward (request, response);
 					 }
 		   

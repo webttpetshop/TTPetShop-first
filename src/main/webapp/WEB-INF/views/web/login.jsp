@@ -47,7 +47,7 @@
 							<input type="hidden" value="login" name="action"/>
 							<button class="btn btn-primary mb-4">Login</button>
 							<p class="mb-2 text-muted">Forgot password? <a href="auth-reset-password.html" class="f-w-400">Reset</a></p>
-							<p class="mb-0 text-muted">Don’t have an account? <a href="auth-signup.html" class="f-w-400">Signup</a></p>
+							<p class="mb-0 text-muted">Don’t have an account? <a href='<c:url value="/signup"/>' class="f-w-400">Signup</a></p>
 						</form>
 					</div>
 				</div>
